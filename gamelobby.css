@@ -1,0 +1,1728 @@
+/* ==========================================================================
+   WINBET GAMELOBBY & CASHOUT MODULE
+   Synchronized with Register Design System & style.css
+   ========================================================================== */
+
+/* Scoped Gaming Atmosphere Background for Game Page Only */
+body.game-lobby-body,
+.game-lobby-body {
+    background-color: #060212 !important;
+    background-image: 
+        linear-gradient(180deg, rgba(6, 2, 18, 0.72) 0%, rgba(10, 3, 26, 0.82) 40%, rgba(4, 1, 11, 0.92) 100%),
+        radial-gradient(circle at 50% 10%, rgba(115, 27, 240, 0.3) 0%, transparent 65%),
+        url('./IMG/bg-1.png') !important;
+    background-repeat: no-repeat !important;
+    background-position: center top !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    min-height: 100vh;
+}
+
+/* Hero Live Jackpot Banner (Image-Enriched, Theme-Friendly Gold × Purple with Chamfered Shape) */
+.jackpot-hero-stage {
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 5;
+    width: 100%;
+}
+
+/* Outer gaming bezel: Cut-Corner Chamfered Clip-Path + Glowing Gradient */
+.jp-chamfer-wrap {
+    position: relative;
+    width: 100%;
+    /* Chamfered Octagonal Cut Corners: 20px */
+    clip-path: polygon(
+        20px 0%, 
+        calc(100% - 20px) 0%, 
+        100% 20px, 
+        100% calc(100% - 20px), 
+        calc(100% - 20px) 100%, 
+        20px 100%, 
+        0% calc(100% - 20px), 
+        0% 20px
+    );
+    /* High-tech theme border gradient: Gold -> Purple -> Amber */
+    background: linear-gradient(
+        135deg, 
+        #f59e0b 0%, 
+        #ffd700 25%, 
+        #ffffff 45%, 
+        #a855f7 70%, 
+        #7c3aed 85%, 
+        #d97706 100%
+    );
+    padding: 2.5px;
+    filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.45)) drop-shadow(0 10px 30px rgba(0, 0, 0, 0.7));
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.jp-chamfer-wrap:hover {
+    filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.65)) drop-shadow(0 0 35px rgba(168, 85, 247, 0.4));
+}
+
+.jackpot-hero-card {
+    position: relative;
+    width: 100%;
+    min-height: 130px;
+    height: auto;
+    border-radius: 0;
+    overflow: hidden;
+    /* Inner Chamfered Octagonal Cut Corners */
+    clip-path: polygon(
+        18px 0%, 
+        calc(100% - 18px) 0%, 
+        100% 18px, 
+        100% calc(100% - 18px), 
+        calc(100% - 18px) 100%, 
+        18px 100%, 
+        0% calc(100% - 18px), 
+        0% 18px
+    );
+    /* Rich layered background: purple-to-dark + gold shine */
+    background:
+        linear-gradient(105deg, 
+            #0d0025 0%, 
+            #1a0540 20%,
+            #2d0d6b 45%,
+            #1e0852 65%,
+            #0a0120 100%
+        );
+    border: none;
+    box-shadow: none;
+}
+
+/* Secondary High-Tech Inner Inset Line */
+.jackpot-hero-card::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    clip-path: polygon(
+        15px 0%, calc(100% - 15px) 0%,
+        100% 15px, 100% calc(100% - 15px),
+        calc(100% - 15px) 100%, 15px 100%,
+        0% calc(100% - 15px), 0% 15px
+    );
+    border: 1px solid rgba(245, 158, 11, 0.22);
+    pointer-events: none;
+    z-index: 4;
+}
+
+/* ── Floating game art background layer ── */
+.jackpot-bg-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+    /* Subtle radial glow centre */
+    background:
+        radial-gradient(ellipse 60% 100% at 50% 50%, rgba(245,158,11,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 80% at 10% 50%, rgba(124,58,237,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 80% at 90% 50%, rgba(220,38,38,0.12) 0%, transparent 65%);
+}
+
+/* Decorative game images */
+.jp-deco-img {
+    position: absolute;
+    object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+    filter: saturate(1.2) brightness(0.65);
+    transition: transform 8s ease;
+}
+
+.jp-deco-left {
+    /* Coins / slots image — left side */
+    left: -40px;
+    top: -20px;
+    width: 200px;
+    height: 170px;
+    object-position: center;
+    border-radius: 50%;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 80%);
+    animation: floatDeco 6s ease-in-out infinite alternate;
+    filter: saturate(1.4) brightness(0.55);
+}
+
+.jp-deco-center-top {
+    /* Rocket — top centre */
+    left: 50%;
+    top: -35px;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 145px;
+    object-position: center top;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 35%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 35%, transparent 75%);
+    animation: floatDeco 5s ease-in-out 1s infinite alternate;
+    filter: saturate(1.5) brightness(0.5);
+}
+
+.jp-deco-right {
+    /* Aviator plane — right edge */
+    right: -60px;
+    top: -10px;
+    width: 240px;
+    height: 170px;
+    object-position: center;
+    border-radius: 50%;
+    mask-image: radial-gradient(ellipse 70% 80% at 40% 50%, black 40%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 40% 50%, black 40%, transparent 78%);
+    animation: floatDeco 7s ease-in-out 0.5s infinite alternate;
+    filter: saturate(1.3) brightness(0.5);
+}
+
+@keyframes floatDeco {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+.jp-deco-center-top {
+    animation: floatDecoCenter 5s ease-in-out 1s infinite alternate;
+}
+@keyframes floatDecoCenter {
+    0%   { transform: translateX(-50%) translateY(0) scale(1); }
+    100% { transform: translateX(-50%) translateY(-6px) scale(1.04); }
+}
+
+/* ── Floating particles ── */
+.jp-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    animation: particleRise 4s ease-in infinite;
+}
+.jp-p1 { width: 6px;  height: 6px;  background: #f59e0b; left: 18%;  animation-delay: 0s;    animation-duration: 3.5s; }
+.jp-p2 { width: 4px;  height: 4px;  background: #a855f7; left: 32%;  animation-delay: 1s;    animation-duration: 4.2s; }
+.jp-p3 { width: 5px;  height: 5px;  background: #fde047; left: 55%;  animation-delay: 0.5s;  animation-duration: 3.8s; }
+.jp-p4 { width: 7px;  height: 7px;  background: #ec4899; left: 70%;  animation-delay: 1.5s;  animation-duration: 4.5s; }
+.jp-p5 { width: 4px;  height: 4px;  background: #38bdf8; left: 85%;  animation-delay: 2s;    animation-duration: 3.2s; }
+
+@keyframes particleRise {
+    0%   { opacity: 0;   bottom: 0;    transform: translateX(0) scale(0.5); }
+    30%  { opacity: 0.9; }
+    100% { opacity: 0;   bottom: 100%; transform: translateX(20px) scale(1.3); }
+}
+
+/* ── Inner content row ── */
+.jackpot-inner-row {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 18px 28px;
+    /* subtle glowing overlay on content area */
+    background: linear-gradient(90deg, 
+        rgba(13, 0, 37, 0.78) 0%,
+        rgba(30, 8, 80, 0.62) 35%,
+        rgba(30, 8, 80, 0.62) 65%,
+        rgba(13, 0, 37, 0.78) 100%
+    );
+}
+
+/* ── Live pill badge ── */
+.jp-live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+    animation: pulseLive 1.4s infinite alternate;
+}
+.jp-live-pill i { font-size: 6px; }
+
+/* ── Sub label ── */
+.jp-sub-label {
+    font-size: 0.75rem;
+    color: #a78bfa;
+    margin-top: 3px;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+/* ── Recent wins stream ── */
+.jp-stream-heading {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #fde047;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    text-shadow: 0 0 8px rgba(253,224,71,0.6);
+}
+
+.jp-game-tag {
+    background: rgba(124, 58, 237, 0.45);
+    border: 1px solid rgba(124, 58, 237, 0.6);
+    color: #c4b5fd;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+    letter-spacing: 0.4px;
+}
+
+/* ── Tournament card (Chamfered Shape) ── */
+.jp-tournament-card {
+    background: rgba(10, 2, 28, 0.85);
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    clip-path: polygon(
+        10px 0%, 
+        calc(100% - 10px) 0%, 
+        100% 10px, 
+        100% calc(100% - 10px), 
+        calc(100% - 10px) 100%, 
+        10px 100%, 
+        0% calc(100% - 10px), 
+        0% 10px
+    );
+    border-radius: 0;
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 160px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.15), inset 0 1px 1px rgba(255,255,255,0.08);
+}
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 160px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.15), inset 0 1px 1px rgba(255,255,255,0.08);
+}
+
+.jp-tour-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: #f97316;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+.jp-tour-prize {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: #fde047;
+    text-shadow: 0 0 10px rgba(253,224,71,0.6);
+    line-height: 1.2;
+}
+.jp-tour-game {
+    font-size: 0.72rem;
+    color: #c4b5fd;
+    margin-top: 2px;
+}
+
+/* ── Golden bottom accent ── */
+.jp-bottom-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 3;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #f59e0b 20%, 
+        #fde047 50%, 
+        #f59e0b 80%, 
+        transparent 100%
+    );
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.9), 0 0 24px rgba(245, 158, 11, 0.4);
+}
+
+/* ── Responsive ── */
+@media (max-width: 992px) {
+    .jackpot-inner-row { padding: 14px 18px; gap: 14px; }
+    .jackpot-ticker-val { font-size: 1.85rem; }
+    .jp-deco-left, .jp-deco-right { display: none; }
+}
+@media (max-width: 576px) {
+    .jackpot-inner-row { flex-direction: column; align-items: flex-start; padding: 14px; }
+    .jackpot-cta-wrap { width: 100%; justify-content: space-between; }
+    .jp-deco-center-top { display: none; }
+}
+
+/* Gold glare sweep animation — re-usable */
+@keyframes goldGlareSweep {
+    0% { transform: translateX(-100%) skewX(-20deg); }
+    30% { transform: translateX(200%) skewX(-20deg); }
+    100% { transform: translateX(200%) skewX(-20deg); }
+}
+
+/* 3D Gold Coin & Player Character Badge */
+.jackpot-player-badge {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 6;
+}
+
+.gold-coin-vault {
+    position: relative;
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.gold-coin-disc {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff176 0%, #ffd54f 25%, #f59e0b 60%, #b45309 100%);
+    box-shadow: 
+        0 0 0 3px #fbbf24,
+        0 0 16px rgba(251, 191, 36, 0.85),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: coinPulseFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes coinPulseFloat {
+    0% { transform: translateY(0) rotate(0deg); box-shadow: 0 0 12px rgba(251, 191, 36, 0.7); }
+    100% { transform: translateY(-4px) rotate(6deg); box-shadow: 0 0 24px rgba(251, 191, 36, 1), 0 0 35px rgba(245, 158, 11, 0.6); }
+}
+
+.gold-coin-disc i {
+    font-size: 1.6rem;
+    color: #451a03;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.gold-crown-floater {
+    position: absolute;
+    top: -6px;
+    right: -2px;
+    font-size: 1.15rem;
+    color: #fde047;
+    filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.9));
+    animation: crownFloat 2s ease-in-out infinite alternate;
+}
+
+@keyframes crownFloat {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-3px) rotate(8deg); }
+}
+
+.gold-coin-sparkle {
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    font-size: 0.85rem;
+    color: #ffffff;
+    filter: drop-shadow(0 0 6px #fff);
+    animation: sparkleBlink 1.8s infinite;
+}
+
+@keyframes sparkleBlink {
+    0%, 100% { opacity: 0.2; transform: scale(0.7); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+.jackpot-meta-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.jackpot-info-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.88rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #fef08a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 0 10px rgba(254, 240, 138, 0.4);
+}
+
+.jackpot-ticker-val {
+    font-family: 'Rajdhani', monospace;
+    font-size: 2.35rem;
+    font-weight: 800;
+    background: linear-gradient(180deg, #ffffff 15%, #fde047 50%, #f59e0b 80%, #d97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 18px rgba(245, 158, 11, 0.65));
+    letter-spacing: 2px;
+    line-height: 1.05;
+}
+
+/* Middle Player Winner Live Stream Ticker (Chamfered Shape) */
+.jackpot-live-stream {
+    background: rgba(10, 2, 28, 0.85);
+    border: 1px solid rgba(245, 179, 0, 0.45);
+    clip-path: polygon(
+        10px 0%, 
+        calc(100% - 10px) 0%, 
+        100% 10px, 
+        100% calc(100% - 10px), 
+        calc(100% - 10px) 100%, 
+        10px 100%, 
+        0% calc(100% - 10px), 
+        0% 10px
+    );
+    border-radius: 0;
+    padding: 10px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+    z-index: 6;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 14px rgba(245,158,11,0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    min-width: 240px;
+}
+
+.winner-pill-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: #e9d5ff;
+}
+
+.winner-badge-tag {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+    text-transform: uppercase;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+.winner-amount-highlight {
+    color: #fde047;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 8px rgba(253, 224, 71, 0.6);
+}
+
+/* Jackpot Quick Action CTA */
+.jackpot-cta-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 6;
+}
+
+.btn-jackpot-spin {
+    position: relative;
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+    clip-path: polygon(
+        8px 0%, 
+        calc(100% - 8px) 0%, 
+        100% 8px, 
+        100% calc(100% - 8px), 
+        calc(100% - 8px) 100%, 
+        8px 100%, 
+        0% calc(100% - 8px), 
+        0% 8px
+    );
+    border: none;
+    color: #000000;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    cursor: pointer;
+    box-shadow: 
+        0 0 16px rgba(245, 158, 11, 0.8),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+}
+
+.btn-jackpot-spin:hover {
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 50%, #d97706 100%);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 
+        0 0 25px rgba(253, 224, 71, 1),
+        0 0 40px rgba(245, 158, 11, 0.8),
+        inset 0 1px 3px #ffffff;
+}
+
+.btn-jackpot-spin i {
+    font-size: 1.1rem;
+    color: #000;
+    animation: spinPulse 2s infinite ease-in-out;
+}
+
+@keyframes spinPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25) rotate(15deg); }
+}
+
+/* Old .card-inner-chassis media queries removed — no longer used in banner */
+
+/* ==========================================================================
+   THEME-FRIENDLY CATEGORY BAR & SEARCH HUD SYSTEM (CHAMFERED SHAPE)
+   ========================================================================== */
+.category-nav-bar {
+    background: linear-gradient(90deg, rgba(14, 5, 36, 0.88) 0%, rgba(26, 8, 62, 0.94) 50%, rgba(14, 5, 36, 0.88) 100%);
+    border: 1.5px solid rgba(120, 31, 245, 0.45);
+    border-radius: 14px;
+    padding: 10px 16px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    position: relative;
+}
+
+.category-scroll-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 3px 2px 5px 2px;
+    flex-grow: 1;
+}
+.category-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Chamfered Cut-Corner Gaming Category Tab */
+.cat-pill {
+    position: relative;
+    background: linear-gradient(180deg, #180838 0%, #0d0422 100%);
+    /* Cut-Corner Chamfered Gaming Shape */
+    clip-path: polygon(
+        8px 0%, 
+        calc(100% - 8px) 0%, 
+        100% 8px, 
+        100% calc(100% - 8px), 
+        calc(100% - 8px) 100%, 
+        8px 100%, 
+        0% calc(100% - 8px), 
+        0% 8px
+    );
+    border: 1px solid #4d1d8f;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #c4b5fd;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    user-select: none;
+}
+
+.cat-pill i {
+    font-size: 0.88rem;
+    color: #a78bfa;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.cat-pill:hover {
+    background: linear-gradient(180deg, #2a0e5e 0%, #150638 100%);
+    border-color: #8b3dff;
+    color: #ffffff;
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.6));
+}
+
+.cat-pill:hover i {
+    color: #f5b300;
+    transform: scale(1.15);
+}
+
+.cat-pill.active {
+    background: linear-gradient(180deg, #781ff5 0%, #590fc9 55%, #3d088f 100%);
+    border-color: #a855f7;
+    color: #ffffff;
+    filter: drop-shadow(0 0 14px rgba(168, 85, 247, 0.85)) drop-shadow(0 0 24px rgba(120, 31, 245, 0.45));
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45), inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+    transform: translateY(-1px);
+}
+
+.cat-pill.active i {
+    color: #ffe066;
+    text-shadow: 0 0 8px rgba(255, 224, 102, 0.8);
+}
+
+/* Gold Underline Glow for Active Tab */
+.cat-pill.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    right: 20%;
+    height: 2.5px;
+    background: #f5b300;
+    box-shadow: 0 0 8px #f5b300, 0 0 14px rgba(245, 179, 0, 0.8);
+    border-radius: 2px;
+}
+
+/* Chamfered HOT Tag */
+.hot-tag {
+    background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 900;
+    padding: 2px 7px;
+    clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+    letter-spacing: 0.6px;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.85);
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: 2px;
+}
+
+/* Chamfered Cut-Corner Search Input Station */
+.search-box-station {
+    position: relative;
+    min-width: 250px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+}
+
+.search-box-station input {
+    background: #090317;
+    border: 1.5px solid #4d1d8f;
+    clip-path: polygon(
+        8px 0%, 
+        calc(100% - 8px) 0%, 
+        100% 8px, 
+        100% calc(100% - 8px), 
+        calc(100% - 8px) 100%, 
+        8px 100%, 
+        0% calc(100% - 8px), 
+        0% 8px
+    );
+    padding: 8px 14px 8px 38px;
+    color: #ffffff;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    outline: none;
+    width: 100%;
+    transition: all 0.25s ease;
+}
+
+.search-box-station input::placeholder {
+    color: #7f6a9e;
+    font-weight: 500;
+    font-size: 0.88rem;
+}
+
+.search-box-station input:focus {
+    border-color: #a855f7;
+    background: #110526;
+    filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.65));
+}
+
+.search-box-station i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #f5b300;
+    font-size: 0.85rem;
+    pointer-events: none;
+    text-shadow: 0 0 8px rgba(245, 179, 0, 0.6);
+}
+
+/* HUD Game Count Badge */
+.game-count-hud {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(18, 7, 43, 0.85);
+    border: 1px solid rgba(245, 179, 0, 0.35);
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+    padding: 5px 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #a491ca;
+    white-space: nowrap;
+}
+
+.game-count-hud .count-num {
+    color: #f5b300;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 0.95rem;
+    text-shadow: 0 0 8px rgba(245, 179, 0, 0.7);
+}
+
+/* Games Grid - 8 Column Desktop Responsive */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    transition: all 0.3s ease;
+    align-items: stretch;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+@media (min-width: 1200px) {
+    .games-grid {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+
+/* ==========================================================================
+   CYBERPUNK CASINO GAME CARD SYSTEM (8-CARD BALANCED HEIGHT)
+   ========================================================================== */
+:root {
+    --card-w: 100%;
+    --card-h: 275px;
+    --cut-size: 14px;
+    --cut-inner: 12px;
+}
+
+/* Theme Presets */
+.theme-red {
+    --neon-primary: #ff123d;
+    --neon-glow: rgba(255, 18, 61, 0.75);
+    --neon-glow-soft: rgba(255, 18, 61, 0.28);
+    --neon-accent: #ff4866;
+    --sub-color: #facc15;
+    --btn-base: #5a0712;
+    --btn-border: #ff334b;
+}
+
+.theme-magenta {
+    --neon-primary: #d900c4;
+    --neon-glow: rgba(217, 0, 196, 0.75);
+    --neon-glow-soft: rgba(217, 0, 196, 0.28);
+    --neon-accent: #f472b6;
+    --sub-color: #f0abfc;
+    --btn-base: #57054f;
+    --btn-border: #f472b6;
+}
+
+.theme-gold {
+    --neon-primary: #ff9900;
+    --neon-glow: rgba(255, 153, 0, 0.75);
+    --neon-glow-soft: rgba(255, 153, 0, 0.28);
+    --neon-accent: #fbbf24;
+    --sub-color: #fde047;
+    --btn-base: #5a2e00;
+    --btn-border: #fbbf24;
+}
+
+.theme-blue {
+    --neon-primary: #0088ff;
+    --neon-glow: rgba(0, 136, 255, 0.75);
+    --neon-glow-soft: rgba(0, 136, 255, 0.28);
+    --neon-accent: #38bdf8;
+    --sub-color: #93c5fd;
+    --btn-base: #062b5c;
+    --btn-border: #38bdf8;
+}
+
+.theme-purple {
+    --neon-primary: #9900ff;
+    --neon-glow: rgba(153, 0, 255, 0.75);
+    --neon-glow-soft: rgba(153, 0, 255, 0.28);
+    --neon-accent: #c084fc;
+    --sub-color: #d8b4fe;
+    --btn-base: #3b0660;
+    --btn-border: #c084fc;
+}
+
+.theme-green {
+    --neon-primary: #00e65b;
+    --neon-glow: rgba(0, 230, 91, 0.75);
+    --neon-glow-soft: rgba(0, 230, 91, 0.28);
+    --neon-accent: #4ade80;
+    --sub-color: #86efac;
+    --btn-base: #054a1d;
+    --btn-border: #4ade80;
+}
+
+/* 3D Perspective Stage */
+.perspective-stage {
+    perspective: 1100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 4px 0 10px 0;
+}
+
+/* Casino Card Container */
+.casino-card-container {
+    position: relative;
+    width: 100%;
+    max-width: 255px;
+    height: var(--card-h);
+    cursor: pointer;
+    user-select: none;
+    transform-style: preserve-3d;
+    transition: transform 0.12s ease-out;
+    will-change: transform;
+}
+
+/* Under-Card Glowing 3D Base Light */
+.card-ground-reflection {
+    position: absolute;
+    bottom: -14px;
+    left: 14%;
+    width: 72%;
+    height: 18px;
+    background: radial-gradient(ellipse at center, var(--neon-primary) 0%, var(--neon-glow-soft) 55%, transparent 75%);
+    filter: blur(8px);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1;
+    transform: translateZ(-20px);
+}
+
+.casino-card-container:hover .card-ground-reflection {
+    filter: blur(12px);
+    opacity: 1;
+    transform: scaleX(1.15) translateZ(-20px);
+}
+
+/* Outer Neon Glow Bezel Wrapper */
+.neon-filter-wrap {
+    position: absolute;
+    inset: 0;
+    filter: drop-shadow(0 0 10px var(--neon-glow)) drop-shadow(0 0 20px var(--neon-glow-soft));
+    transition: filter 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.casino-card-container:hover .neon-filter-wrap {
+    filter: drop-shadow(0 0 16px var(--neon-primary)) drop-shadow(0 0 32px var(--neon-glow));
+}
+
+/* Octagonal Cut-Corner Bezel */
+.card-outer-bezel {
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(
+        var(--cut-size) 0%, 
+        calc(100% - var(--cut-size)) 0%, 
+        100% var(--cut-size), 
+        100% calc(100% - var(--cut-size)), 
+        calc(100% - var(--cut-size)) 100%, 
+        var(--cut-size) 100%, 
+        0% calc(100% - var(--cut-size)), 
+        0% var(--cut-size)
+    );
+    background: linear-gradient(
+        135deg,
+        var(--neon-accent) 0%,
+        #ffffff 35%,
+        var(--neon-primary) 65%,
+        #050811 100%
+    );
+    padding: 2px;
+    display: flex;
+}
+
+/* Inner Chassis */
+.card-inner-chassis {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #090d18;
+    clip-path: polygon(
+        var(--cut-inner) 0%, 
+        calc(100% - var(--cut-inner)) 0%, 
+        100% var(--cut-inner), 
+        100% calc(100% - var(--cut-inner)), 
+        calc(100% - var(--cut-inner)) 100%, 
+        var(--cut-inner) 100%, 
+        0% calc(100% - var(--cut-inner)), 
+        0% var(--cut-inner)
+    );
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-inner-chassis::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    clip-path: polygon(
+        15px 0%, calc(100% - 15px) 0%,
+        100% 15px, 100% calc(100% - 15px),
+        calc(100% - 15px) 100%, 15px 100%,
+        0% calc(100% - 15px), 0% 15px
+    );
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Top Accent Neon Tab */
+.top-notch-tab {
+    position: absolute;
+    top: 0;
+    left: 32%;
+    right: 32%;
+    height: 3.5px;
+    background: var(--neon-primary);
+    box-shadow: 0 0 10px var(--neon-primary), 0 0 14px var(--neon-accent);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    z-index: 15;
+}
+
+/* Card Floating Corner Badge */
+.card-floating-badge {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    z-index: 12;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+.badge-hot { background: linear-gradient(135deg, #ef4444, #f97316); color: #fff; box-shadow: 0 0 10px rgba(239, 68, 68, 0.7); }
+.badge-gold { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: 900; box-shadow: 0 0 10px rgba(245, 158, 11, 0.7); }
+.badge-live { background: #dc2626; color: #fff; animation: pulseLive 1.5s infinite alternate; }
+.badge-cyan { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; box-shadow: 0 0 10px rgba(6, 182, 212, 0.7); }
+.badge-green { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 0 10px rgba(16, 185, 129, 0.7); }
+
+@keyframes pulseLive {
+    0% { opacity: 0.8; box-shadow: 0 0 6px rgba(220, 38, 38, 0.6); }
+    100% { opacity: 1; box-shadow: 0 0 14px rgba(220, 38, 38, 1); }
+}
+
+/* Artwork Layer */
+.card-artwork-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-artwork-layer svg,
+.card-artwork-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.casino-card-container:hover .card-artwork-layer svg,
+.casino-card-container:hover .card-artwork-layer img {
+    transform: scale(1.08) translateY(-4px);
+}
+
+/* Background Cyberpunk Grid */
+.card-grid-texture {
+    position: absolute;
+    inset: 0;
+    background-size: 20px 20px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    z-index: 3;
+    pointer-events: none;
+    mask-image: radial-gradient(circle at 50% 35%, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at 50% 35%, black 20%, transparent 80%);
+}
+
+/* Vignette Gradient */
+.card-vignette {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg, 
+        rgba(5, 8, 17, 0.05) 0%, 
+        rgba(5, 8, 17, 0.20) 38%, 
+        rgba(6, 9, 18, 0.80) 65%, 
+        #050811 92%
+    );
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* Specular Glare */
+.card-specular-glare {
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle 160px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.03) 45%,
+        transparent 65%
+    );
+    z-index: 6;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+/* Bottom Content Deck */
+.card-content-deck {
+    position: relative;
+    z-index: 8;
+    margin-top: auto;
+    padding: 0 12px 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateZ(24px);
+}
+
+.card-title-text {
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 1.15rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    line-height: 1.15;
+    margin-bottom: 2px;
+    background: linear-gradient(180deg, #ffffff 15%, #d1e2f5 50%, #ffffff 75%, #889bb4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+}
+
+.card-subtitle-text {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    font-size: 0.76rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--sub-color);
+    margin-bottom: 8px;
+    text-shadow: 0 0 8px var(--neon-glow);
+}
+
+/* Play Button */
+.btn-play-neon {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 1.2px;
+    color: #ffffff !important;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.55) 100%), var(--btn-base);
+    border: 1.2px solid var(--btn-border);
+    padding: 4px 18px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    box-shadow: 
+        0 0 10px var(--neon-glow),
+        inset 0 1px 2px rgba(255,255,255,0.7),
+        inset 0 -1px 3px rgba(0,0,0,0.5);
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform: translateZ(10px);
+}
+
+.btn-play-neon i {
+    font-size: 0.68rem;
+    transition: transform 0.2s ease;
+}
+
+.casino-card-container:hover .btn-play-neon {
+    background: var(--neon-primary);
+    border-color: #ffffff;
+    box-shadow: 
+        0 0 18px var(--neon-primary),
+        0 0 28px var(--neon-glow),
+        inset 0 1px 3px #ffffff;
+    transform: translateZ(16px) scale(1.04);
+}
+
+.casino-card-container:hover .btn-play-neon i {
+    transform: translateX(2px);
+}
+.btn-demo-mode:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.game-card-footer {
+    padding: 10px 12px;
+    background: #0d041e;
+    border-top: 1px solid rgba(110, 38, 217, 0.3);
+    text-align: center;
+}
+
+.game-main-title {
+    font-size: 0.86rem;
+    font-weight: 800;
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.game-meta-pills {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-dim);
+}
+
+/* Interactive Slot Machine Theater Modal */
+.slot-theater-body {
+    background: #090317;
+    border-radius: 20px;
+    border: 2px solid #8b3dff;
+    box-shadow: 0 0 45px rgba(139, 61, 255, 0.6);
+    overflow: hidden;
+}
+
+.reels-container {
+    background: #04010a;
+    border: 2px solid #5a1ea8;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
+    margin: 16px 0;
+}
+
+.reel-window {
+    width: 90px;
+    height: 135px;
+    background: linear-gradient(180deg, #1b0c38 0%, #0d041e 50%, #1b0c38 100%);
+    border: 1px solid #7c3aed;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    box-shadow: inset 0 6px 12px rgba(0,0,0,0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+.reel-spinning {
+    animation: reelSpinFast 0.12s linear infinite;
+}
+
+@keyframes reelSpinFast {
+    0% { transform: translateY(-30%); filter: blur(3px); }
+    50% { transform: translateY(30%); filter: blur(3px); }
+    100% { transform: translateY(-30%); filter: blur(3px); }
+}
+
+/* ==========================================================================
+   WINBET LOBBY SECTIONS (MATCHING REFERENCE DESIGN)
+   ========================================================================== */
+
+/* Section Headers */
+.section-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+}
+
+.section-header-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.section-header-title i {
+    color: #f5b300;
+}
+
+.btn-view-all {
+    background: rgba(30, 10, 65, 0.6);
+    border: 1px solid rgba(139, 61, 255, 0.4);
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #c4b5fd;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.btn-view-all:hover {
+    background: #5916ba;
+    border-color: #a855f7;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+/* -------------------------------------------------------------
+   POPULAR GAMES GRID (8 CARDS)
+   ------------------------------------------------------------- */
+.popular-games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+@media (min-width: 1200px) {
+    .popular-games-grid {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+
+.popular-game-card {
+    background: #090317;
+    border: 1.5px solid var(--pop-border, #a855f7);
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popular-game-card:hover {
+    transform: translateY(-4px);
+    border-color: #ffffff;
+    box-shadow: 0 0 20px var(--pop-glow, rgba(168, 85, 247, 0.7)), inset 0 0 10px var(--pop-glow, rgba(168, 85, 247, 0.3));
+}
+
+.pop-art-box {
+    width: 100%;
+    height: 105px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background: #110526;
+    margin-bottom: 8px;
+}
+
+.pop-art-box svg,
+.pop-art-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.popular-game-card:hover .pop-art-box svg,
+.popular-game-card:hover .pop-art-box img {
+    transform: scale(1.08);
+}
+
+.pop-game-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    font-size: 0.82rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+.pop-player-count {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #fb923c;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    letter-spacing: 0.5px;
+}
+
+.pop-player-count i {
+    color: #ef4444;
+}
+
+/* -------------------------------------------------------------
+   ALL GAMES CATEGORY QUICK TILES (8 TILES)
+   ------------------------------------------------------------- */
+.category-tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+@media (min-width: 1200px) {
+    .category-tiles-grid {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+
+.cat-hub-tile {
+    background: linear-gradient(180deg, #180838 0%, #0d0422 100%);
+    border: 1.5px solid #4d1d8f;
+    border-radius: 12px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.cat-hub-tile:hover {
+    border-color: #a855f7;
+    background: linear-gradient(180deg, #2c0f61 0%, #150638 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.55);
+}
+
+.cat-hub-icon {
+    font-size: 1.45rem;
+    color: #c084fc;
+    filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
+    transition: transform 0.2s ease;
+}
+
+.cat-hub-tile:hover .cat-hub-icon {
+    transform: scale(1.15);
+    color: #f5b300;
+}
+
+.cat-hub-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: #e9d5ff;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+/* -------------------------------------------------------------
+   TRI-SHOWCASE BLOCK (NEW & HOT, LIVE CASINO, SPORTS)
+   ------------------------------------------------------------- */
+.tri-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+@media (min-width: 1200px) {
+    .tri-showcase-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.showcase-block-panel {
+    background: linear-gradient(180deg, rgba(20, 7, 48, 0.85) 0%, rgba(10, 3, 26, 0.95) 100%);
+    border: 1.5px solid rgba(120, 31, 245, 0.4);
+    border-radius: 14px;
+    padding: 12px 14px 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.mini-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.mini-game-card {
+    background: #090317;
+    border: 1px solid rgba(139, 61, 255, 0.3);
+    border-radius: 8px;
+    padding: 6px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.22s ease;
+}
+
+.mini-game-card:hover {
+    border-color: #a855f7;
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+}
+
+.mini-art-thumb {
+    width: 100%;
+    height: 68px;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    background: #150638;
+    margin-bottom: 5px;
+}
+
+.mini-art-thumb svg,
+.mini-art-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mini-badge {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.52rem;
+    font-weight: 900;
+    padding: 1px 4px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    z-index: 2;
+}
+.mini-badge-new { background: #06b6d4; color: #fff; box-shadow: 0 0 6px #06b6d4; }
+.mini-badge-hot { background: #ef4444; color: #fff; box-shadow: 0 0 6px #ef4444; }
+
+.mini-game-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: #e9d5ff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* -------------------------------------------------------------
+   PROMOTIONS & JACKPOTS BANNER
+   ------------------------------------------------------------- */
+.promo-jackpot-banner {
+    background: linear-gradient(90deg, #180538 0%, #350c77 50%, #180538 100%);
+    border: 1.5px solid #7c22e0;
+    border-radius: 14px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 25px rgba(124, 34, 224, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-jackpot-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(245, 179, 0, 0.12) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.promo-gift-icon-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.promo-gift-box {
+    width: 48px;
+    height: 48px;
+    font-size: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 12px rgba(245, 179, 0, 0.7));
+}
+
+.promo-heading {
+    font-family: 'Cinzel', 'Rajdhani', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.promo-subtext {
+    font-size: 0.78rem;
+    color: #c4b5fd;
+    margin: 0;
+}
+
+/* -------------------------------------------------------------
+   WINBET FULL FOOTER & TRUST BADGES
+   ------------------------------------------------------------- */
+.winbet-full-footer {
+    background: #04010b;
+    border-top: 1px solid rgba(107, 34, 199, 0.3);
+    padding: 30px 20px 85px 20px;
+    color: #9d8ec2;
+    font-size: 0.8rem;
+}
+
+.footer-col-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links-list li {
+    margin-bottom: 6px;
+}
+
+.footer-links-list a {
+    color: #9d8ec2;
+    text-decoration: none;
+    font-size: 0.78rem;
+    transition: color 0.2s ease;
+}
+
+.footer-links-list a:hover {
+    color: #f5b300;
+}
+
+.payment-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.payment-chip {
+    background: #0d0622;
+    border: 1px solid #3b1875;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.security-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ssl-badge {
+    background: #052e16;
+    border: 1px solid #16a34a;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #4ade80;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.age-badge {
+    background: #1e1b4b;
+    border: 1px solid #6366f1;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: #ffffff;
+}

@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WINBET - Gaming Platform & Terminal Station</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter, Rajdhani, Orbitron & Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700;800&family=Orbitron:ital,wght@0,800;0,900;1,900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Unified Master Stylesheet & Lobby Styles -->
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./gamelobby.css">
+</head>
+<body class="game-lobby-body">
+
+    <!-- TOP NAVIGATION HEADER -->
+    <header class="smart-pc-header">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            
+            <!-- Left: Winbet Brand Logo + Machine Station Badge -->
+            <div class="d-flex align-items-center gap-3">
+                <a href="Register.html" class="d-flex align-items-center gap-2 text-decoration-none me-1" title="WINBET Central">
+                  
+                   
+                </a>
+
+                <div class="mode-toggle-bar d-none d-sm-inline-flex">
+                    <button id="btnModeSmartPC" class="mode-toggle-btn active" onclick="setMachineMode('smartpc')">
+                        <i class="fa-solid fa-desktop me-1"></i> Smart PC
+                    </button>
+                    <button id="btnModeTerminal" class="mode-toggle-btn" onclick="setMachineMode('terminal')">
+                        <i class="fa-solid fa-receipt me-1"></i> Terminal
+                    </button>
+                </div>
+                
+                <div class="station-badge">
+                    <span class="online-dot"></span>
+                    <span id="stationCodeDisplay" class="fw-bold">Smart PC-03</span>
+                    <span class="text-secondary">|</span>
+                    <span class="text-warning-subtle" id="stationShopDisplay" style="font-size: 0.76rem;">Windhoek Central</span>
+                </div>
+            </div>
+
+            <!-- Right: Balance, Primary Action (Cash Out / Print Ticket) & Tools -->
+            <div class="d-flex align-items-center gap-2 gap-sm-3">
+                <!-- Live Digital Clock -->
+               
+
+                <!-- Balance Display Chip -->
+                <div class="balance-chip">
+                    <div>
+                        <span class="label">Balance</span>
+                        <div class="d-flex align-items-center gap-1">
+                            <span class="val" id="playerBalanceDisplay">N$ 250.00</span>
+                        </div>
+                    </div>
+                    <!-- Physical Bill Insertion Simulation (Terminal mode) or Top-Up -->
+                 
+                </div>
+
+                <!-- Primary Action Button: Smart PC = "Cash Out" | Terminal = "Print Cashout Ticket" -->
+                <button type="button" class="btn-gold-action" id="btnPrimaryCashout" onclick="handlePrimaryAction()">
+                    <i class="fa-solid fa-money-bill-transfer" id="primaryActionIcon"></i>
+                    <span id="primaryActionText">Cash Out</span>
+                </button>
+
+                <!-- Sound Effects Audio Toggle -->
+                <button type="button" class="btn-icon-control" id="btnAudioToggle" onclick="toggleAudio()" title="Sound Effects">
+                    <i class="fa-solid fa-volume-high" id="audioIcon"></i>
+                </button>
+
+                <!-- Fullscreen Station Mode -->
+                <button type="button" class="btn-icon-control" onclick="toggleDesktopFullscreen()" title="Fullscreen Mode">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+
+                <!-- Return to Register -->
+                <a href="Register.html" class="btn-icon-control text-decoration-none" title="Registration Portal">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid px-lg-4 py-3 flex-grow-1">
+        
+        <!-- Live Jackpot Ticker Hero Banner — Theme-Friendly with Game Artwork & Chamfered Shape -->
+        <div class="jackpot-hero-stage">
+            <div class="jp-chamfer-wrap">
+                <div class="jackpot-hero-card">
+                    <!-- Background: BG image + layered gradients + floating game art -->
+                    <div class="jackpot-bg-layer">
+                        <!-- Floating game images used as decorative parallax artwork -->
+                        <img src="./IMG/3.png" alt="" class="jp-deco-img jp-deco-left" aria-hidden="true">
+                        <img src="./IMG/6.png" alt="" class="jp-deco-img jp-deco-center-top" aria-hidden="true">
+                        <img src="./IMG/avi.png" alt="" class="jp-deco-img jp-deco-right" aria-hidden="true">
+                        <!-- Animated particle dots -->
+                        <div class="jp-particle jp-p1"></div>
+                        <div class="jp-particle jp-p2"></div>
+                        <div class="jp-particle jp-p3"></div>
+                        <div class="jp-particle jp-p4"></div>
+                        <div class="jp-particle jp-p5"></div>
+                    </div>
+
+                    <!-- Glowing chamfered inner content row -->
+                    <div class="jackpot-inner-row">
+
+                        <!-- LEFT: Gold coin vault + jackpot counter -->
+                        <div class="jackpot-player-badge">
+                            <div class="gold-coin-vault">
+                                <div class="gold-coin-disc">
+                                    <i class="fa-solid fa-coins"></i>
+                                </div>
+                                <i class="fa-solid fa-crown gold-crown-floater"></i>
+                                <i class="fa-solid fa-sparkles gold-coin-sparkle"></i>
+                            </div>
+                            <div class="jackpot-meta-col">
+                                <div class="jackpot-info-title">
+                                    <span>WINBET GRAND JACKPOT</span>
+                                    <span class="jp-live-pill"><i class="fa-solid fa-circle"></i> LIVE</span>
+                                </div>
+                                <div class="jackpot-ticker-val" id="liveJackpotMeter">N$ 1,483,061.04</div>
+                                <div class="jp-sub-label"><i class="fa-solid fa-users me-1"></i>24,891 Players Active Right Now</div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: CTA -->
+                        <div class="jackpot-cta-wrap">
+                            <div class="jp-tournament-card">
+                                <div class="jp-tour-label"><i class="fa-solid fa-fire-flame-curved"></i> HOT TOURNAMENT</div>
+                                <div class="jp-tour-prize">N$ 50,000 Prize Pool</div>
+                                <div class="jp-tour-game">Zeus Blitz • Ends in 04:22:38</div>
+                            </div>
+                            <button class="btn-jackpot-spin" onclick="launchSlotTheater('Gates of Olympus', 'art-olympus', 'zeus')">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>SPIN NOW</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom chamfered golden border accent line -->
+                    <div class="jp-bottom-accent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 1: CATEGORY FILTER SECTION (GAMES BY CATEGORY) -->
+        <section id="categorySection" class="mb-5">
+            <div class="section-header-bar">
+                <h2 class="section-header-title">
+                    <i class="fa-solid fa-layer-group text-info"></i> Games by Category
+                </h2>
+                <div class="d-none d-sm-flex align-items-center gap-2">
+                    <span class="text-secondary small fw-semibold">FILTER BY GAME TYPE</span>
+                </div>
+            </div>
+
+            <!-- Unified Category Navigation & Integrated Search Bar -->
+            <div class="category-nav-bar">
+                <div class="category-scroll-container" id="categoryTabs">
+                    <div class="cat-pill active" data-cat="all" onclick="filterCategory(this, 'all')">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                        <span>All Games</span>
+                    </div>
+                    <div class="cat-pill" data-cat="slots" onclick="filterCategory(this, 'slots')">
+                        <i class="fa-solid fa-gem text-info"></i>
+                        <span>Slots</span>
+                    </div>
+                    <div class="cat-pill" data-cat="crash" onclick="filterCategory(this, 'crash')">
+                        <i class="fa-solid fa-rocket text-warning"></i>
+                        <span>Crash</span>
+                        <span class="hot-tag"><i class="fa-solid fa-fire"></i> HOT</span>
+                    </div>
+                    <div class="cat-pill" data-cat="table" onclick="filterCategory(this, 'table')">
+                        <i class="fa-solid fa-dice text-light"></i>
+                        <span>Table Games</span>
+                    </div>
+                    <div class="cat-pill" data-cat="live" onclick="filterCategory(this, 'live')">
+                        <i class="fa-solid fa-video text-danger"></i>
+                        <span>Live Casino</span>
+                    </div>
+                    <div class="cat-pill" data-cat="sports" onclick="filterCategory(this, 'sports')">
+                        <i class="fa-solid fa-futbol text-success"></i>
+                        <span>Sports</span>
+                    </div>
+                    <div class="cat-pill" data-cat="instant" onclick="filterCategory(this, 'instant')">
+                        <i class="fa-solid fa-bolt text-warning"></i>
+                        <span>Instant</span>
+                    </div>
+                </div>
+
+                <!-- Integrated Search Bar & Game Count -->
+                <div class="d-flex align-items-center gap-3 ms-auto mt-2 mt-md-0">
+                    <div class="search-box-station">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="gameSearchInput" placeholder="Search games by name..." oninput="handleGameSearch(this.value)">
+                    </div>
+                    <div class="game-count-hud d-none d-sm-inline-flex">
+                        <span id="gameCountBadge" class="count-num">16</span>
+                        <span>Games Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORY FILTERED GAMES GRID -->
+            <div class="games-grid" id="categoryGamesGridContainer">
+                <!-- 1. AVIATOR -->
+                <div class="game-card-stage perspective-stage game-card" data-category="crash instant slots" data-name="aviator">
+                    <div class="casino-card-container theme-red" onclick="launchSlotTheater('Aviator', 'art-aviator', 'plane')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-hot"><i class="fa-solid fa-fire"></i> HOT</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/1.png" alt="Aviator" loading="lazy" onerror="this.src='./IMG/avi.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f87171, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AVIATOR</div>
+                                        <div class="card-subtitle-text">FLY HIGH • 10,000X MAX</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. LUCKY DICE -->
+                <div class="game-card-stage perspective-stage game-card" data-category="table instant live" data-name="lucky dice">
+                    <div class="casino-card-container theme-purple" onclick="launchSlotTheater('Lucky Dice', 'art-dice', 'dice')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-dice"></i> TOP</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/2.png" alt="Lucky Dice" loading="lazy" onerror="this.src='./IMG/2.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #c084fc, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LUCKY DICE</div>
+                                        <div class="card-subtitle-text">ROLL &amp; WIN • 98.6% RTP</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>ROLL NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. PLINKO VIP -->
+                <div class="game-card-stage perspective-stage game-card" data-category="instant slots" data-name="plinko vip">
+                    <div class="casino-card-container theme-magenta" onclick="launchSlotTheater('Plinko VIP', 'art-plinko', 'ball')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-hot"><i class="fa-solid fa-bullseye"></i> HOT</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/3.png" alt="Plinko VIP" loading="lazy" onerror="this.src='./IMG/3.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f472b6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PLINKO VIP</div>
+                                        <div class="card-subtitle-text">DROP BALL • 1,000X MULTI</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>DROP NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. CYBER MINES -->
+                <div class="game-card-stage perspective-stage game-card" data-category="instant table slots" data-name="cyber mines">
+                    <div class="casino-card-container theme-green" onclick="launchSlotTheater('Cyber Mines', 'art-mines', 'bomb')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-green"><i class="fa-solid fa-shield-halved"></i> VIP</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/4.png" alt="Cyber Mines" loading="lazy" onerror="this.src='./IMG/4.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #6ee7b7, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CYBER MINES</div>
+                                        <div class="card-subtitle-text">AVOID MINES • CASH OUT</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. PENALTY GOAL -->
+                <div class="game-card-stage perspective-stage game-card" data-category="sports live instant" data-name="penalty goal">
+                    <div class="casino-card-container theme-blue" onclick="launchSlotTheater('Penalty Goal', 'art-penalty', 'ball')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-futbol"></i> POPULAR</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/5.png" alt="Penalty Goal" loading="lazy" onerror="this.src='./IMG/5.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #38bdf8, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PENALTY GOAL</div>
+                                        <div class="card-subtitle-text">SCORE BIG • 97.8% RTP</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>KICK NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. ROCKET CRASH -->
+                <div class="game-card-stage perspective-stage game-card" data-category="crash instant slots" data-name="rocket crash">
+                    <div class="casino-card-container theme-gold" onclick="launchSlotTheater('Rocket Crash', 'art-rocket', 'rocket')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-gold"><i class="fa-solid fa-bolt"></i> 5000X</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/6.png" alt="Rocket Crash" loading="lazy" onerror="this.src='./IMG/6.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #fde047, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ROCKET CRASH</div>
+                                        <div class="card-subtitle-text">FLY HIGH • 5,000X MAX</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>LAUNCH</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. JET FLIGHT -->
+                <div class="game-card-stage perspective-stage game-card" data-category="crash live instant" data-name="jet flight">
+                    <div class="casino-card-container theme-blue" onclick="launchSlotTheater('Jet Flight', 'art-jet', 'plane')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-plane-departure"></i> FAST</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/avi.png" alt="Jet Flight" loading="lazy" onerror="this.src='./IMG/avi.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #38bdf8, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">JET FLIGHT</div>
+                                        <div class="card-subtitle-text">TURBO FLY • MULTIPLIER</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>FLY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. CRAZY CRASH -->
+                <div class="game-card-stage perspective-stage game-card" data-category="crash live table" data-name="crazy crash">
+                    <div class="casino-card-container theme-red" onclick="launchSlotTheater('Crazy Crash', 'art-crazycrash', 'wheel')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-live"><i class="fa-solid fa-circle"></i> LIVE</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/1.png" alt="Crazy Crash" loading="lazy" onerror="this.src='./IMG/1.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f87171, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CRAZY CRASH</div>
+                                        <div class="card-subtitle-text">MULTIPLAYER • LIVE ACTION</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>JOIN ROOM</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. GATES OF OLYMPUS -->
+                <div class="game-card-stage perspective-stage game-card" data-category="slots" data-name="gates of olympus">
+                    <div class="casino-card-container theme-gold" onclick="launchSlotTheater('Gates of Olympus', 'art-olympus', 'zeus')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-gold"><i class="fa-solid fa-bolt"></i> 500X</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/3.png" alt="Gates of Olympus" loading="lazy" onerror="this.src='./IMG/3.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #fde047, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">OLYMPUS BLITZ</div>
+                                        <div class="card-subtitle-text">GATES OF ZEUS • 5,000X</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>SPIN NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. SWEET BONANZA -->
+                <div class="game-card-stage perspective-stage game-card" data-category="slots" data-name="sweet bonanza">
+                    <div class="casino-card-container theme-magenta" onclick="launchSlotTheater('Sweet Bonanza', 'art-bonanza', 'candy')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-hot"><i class="fa-solid fa-fire"></i> BONUS</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/2.png" alt="Sweet Bonanza" loading="lazy" onerror="this.src='./IMG/2.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f472b6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SWEET BONANZA</div>
+                                        <div class="card-subtitle-text">TUMBLE REELS • 100X MULTI</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>SPIN NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11. SUGAR RUSH -->
+                <div class="game-card-stage perspective-stage game-card" data-category="slots instant" data-name="sugar rush">
+                    <div class="casino-card-container theme-purple" onclick="launchSlotTheater('Sugar Rush', 'art-sugarrush', 'candy')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-star"></i> NEW</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/4.png" alt="Sugar Rush" loading="lazy" onerror="this.src='./IMG/4.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #c084fc, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SUGAR RUSH</div>
+                                        <div class="card-subtitle-text">MULTIPLIER SPOTS • 128X</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>SPIN NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12. LIVE ROULETTE -->
+                <div class="game-card-stage perspective-stage game-card" data-category="table live" data-name="live roulette">
+                    <div class="casino-card-container theme-red" onclick="launchSlotTheater('Live Roulette', 'art-live-roulette', 'roulette')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-live"><i class="fa-solid fa-circle"></i> LIVE</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/5.png" alt="Live Roulette" loading="lazy" onerror="this.src='./IMG/5.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f87171, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LIVE ROULETTE</div>
+                                        <div class="card-subtitle-text">EUROPEAN • 36 NUMBERS</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>BET NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13. BLACKJACK PRO -->
+                <div class="game-card-stage perspective-stage game-card" data-category="table live" data-name="blackjack pro">
+                    <div class="casino-card-container theme-green" onclick="launchSlotTheater('Live Blackjack', 'art-live-blackjack', 'cards')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-green"><i class="fa-solid fa-shield-halved"></i> VIP</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/6.png" alt="Blackjack Pro" loading="lazy" onerror="this.src='./IMG/6.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #6ee7b7, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">BLACKJACK PRO</div>
+                                        <div class="card-subtitle-text">PERFECT PAIRS • 3:2 PAY</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>DEAL NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 14. LIVE BACCARAT -->
+                <div class="game-card-stage perspective-stage game-card" data-category="table live" data-name="live baccarat">
+                    <div class="casino-card-container theme-purple" onclick="launchSlotTheater('Live Baccarat', 'art-live-baccarat', 'cards')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-user-tie"></i> LIVE</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/2.png" alt="Live Baccarat" loading="lazy" onerror="this.src='./IMG/2.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #c084fc, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LIVE BACCARAT</div>
+                                        <div class="card-subtitle-text">SPEED BACCARAT • NO COMM</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>BET NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15. VIRTUAL SPORTS -->
+                <div class="game-card-stage perspective-stage game-card" data-category="sports" data-name="virtual sports">
+                    <div class="casino-card-container theme-blue" onclick="launchSlotTheater('Virtual Football', 'art-vfootball', 'ball')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-futbol"></i> 24/7</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/5.png" alt="Virtual Sports" loading="lazy" onerror="this.src='./IMG/5.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #38bdf8, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">VIRTUAL LEAGUE</div>
+                                        <div class="card-subtitle-text">3-MIN MATCHES • LIVE ODDS</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>BET NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 16. CRASH ROYALE -->
+                <div class="game-card-stage perspective-stage game-card" data-category="crash live" data-name="crash royale">
+                    <div class="casino-card-container theme-red" onclick="launchSlotTheater('Crash Royale', 'art-crazycrash', 'wheel')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-hot"><i class="fa-solid fa-fire"></i> 24/7</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/1.png" alt="Crash Royale" loading="lazy" onerror="this.src='./IMG/1.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f87171, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CRASH ROYALE</div>
+                                        <div class="card-subtitle-text">118.5K PLAYERS • ROOM</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>JOIN ROOM</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NO RESULTS EMPTY STATE -->
+            <div id="noGamesFoundState" class="text-center py-5 d-none">
+                <div class="mb-3" style="font-size: 3rem; color: #a855f7;">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <h3 class="fw-bold text-light mb-2">No Games Found</h3>
+                <p class="text-secondary small mb-4">No matching games in this category. Try another filter or search term.</p>
+                <button class="btn btn-outline-warning rounded-pill px-4 py-2" onclick="resetCategoryFilter()">
+                    <i class="fa-solid fa-rotate-left me-1"></i> Reset to All Games
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 2: FEATURED GAMES -->
+        <section id="featuredSection" class="mb-5">
+            <div class="section-header-bar" id="featuredHeader">
+                <h2 class="section-header-title">
+                    <i class="fa-solid fa-star text-warning"></i> Featured Games
+                </h2>
+                <a href="#categorySection" class="btn-view-all">
+                    <span>View All</span> <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- REUSABLE GAMES GRID (8 FEATURED GAMES) -->
+            <div class="games-grid" id="gamesGridContainer">
+                <!-- 1. AVIATOR -->
+                <div class="game-card-stage perspective-stage game-card" data-category="featured crash slots instant" data-name="aviator">
+                    <div class="casino-card-container theme-red" onclick="launchSlotTheater('Aviator', 'art-aviator', 'plane')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-hot"><i class="fa-solid fa-fire"></i> HOT</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/1.png" alt="Aviator" loading="lazy" onerror="this.src='./IMG/avi.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f87171, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AVIATOR</div>
+                                        <div class="card-subtitle-text">FLY HIGH • 10,000X MAX</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. LUCKY DICE -->
+                <div class="game-card-stage perspective-stage game-card" data-category="featured table instant live" data-name="lucky dice">
+                    <div class="casino-card-container theme-purple" onclick="launchSlotTheater('Lucky Dice', 'art-dice', 'dice')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-dice"></i> TOP</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/2.png" alt="Lucky Dice" loading="lazy" onerror="this.src='./IMG/2.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #c084fc, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LUCKY DICE</div>
+                                        <div class="card-subtitle-text">ROLL &amp; WIN • 98.6% RTP</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>ROLL NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. PLINKO VIP -->
+                <div class="game-card-stage perspective-stage game-card" data-category="featured instant bingo slots" data-name="plinko vip">
+                    <div class="casino-card-container theme-magenta" onclick="launchSlotTheater('Plinko VIP', 'art-plinko', 'ball')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-hot"><i class="fa-solid fa-bullseye"></i> HOT</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/3.png" alt="Plinko VIP" loading="lazy" onerror="this.src='./IMG/3.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f472b6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PLINKO VIP</div>
+                                        <div class="card-subtitle-text">DROP BALL • 1,000X MULTI</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>DROP NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. CYBER MINES -->
+                <div class="game-card-stage perspective-stage game-card" data-category="featured instant slots table" data-name="cyber mines">
+                    <div class="casino-card-container theme-green" onclick="launchSlotTheater('Cyber Mines', 'art-mines', 'bomb')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-green"><i class="fa-solid fa-shield-halved"></i> VIP</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/4.png" alt="Cyber Mines" loading="lazy" onerror="this.src='./IMG/4.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #6ee7b7, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CYBER MINES</div>
+                                        <div class="card-subtitle-text">AVOID MINES • CASH OUT</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. PENALTY GOAL -->
+                <div class="game-card-stage perspective-stage game-card" data-category="featured sports instant live" data-name="penalty goal">
+                    <div class="casino-card-container theme-blue" onclick="launchSlotTheater('Penalty Goal', 'art-penalty', 'ball')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-futbol"></i> POPULAR</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/5.png" alt="Penalty Goal" loading="lazy" onerror="this.src='./IMG/5.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #38bdf8, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PENALTY GOAL</div>
+                                        <div class="card-subtitle-text">SCORE BIG • 97.8% RTP</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>KICK NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. ROCKET CRASH -->
+                <div class="game-card-stage perspective-stage game-card" data-category="featured crash instant slots" data-name="rocket crash">
+                    <div class="casino-card-container theme-gold" onclick="launchSlotTheater('Rocket Crash', 'art-rocket', 'rocket')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-gold"><i class="fa-solid fa-bolt"></i> 5000X</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/6.png" alt="Rocket Crash" loading="lazy" onerror="this.src='./IMG/6.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #fde047, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ROCKET CRASH</div>
+                                        <div class="card-subtitle-text">FLY HIGH • 5,000X MAX</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>LAUNCH</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. JET FLIGHT -->
+                <div class="game-card-stage perspective-stage game-card" data-category="featured crash live instant" data-name="jet flight">
+                    <div class="casino-card-container theme-blue" onclick="launchSlotTheater('Jet Flight', 'art-jet', 'plane')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-plane-departure"></i> FAST</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/avi.png" alt="Jet Flight" loading="lazy" onerror="this.src='./IMG/avi.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #38bdf8, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">JET FLIGHT</div>
+                                        <div class="card-subtitle-text">TURBO FLY • MULTIPLIER</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>FLY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. CRAZY CRASH -->
+                <div class="game-card-stage perspective-stage game-card" data-category="featured crash live table" data-name="crazy crash">
+                    <div class="casino-card-container theme-red" onclick="launchSlotTheater('Crazy Crash', 'art-crazycrash', 'wheel')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-live"><i class="fa-solid fa-circle"></i> LIVE</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/1.png" alt="Crazy Crash" loading="lazy" onerror="this.src='./IMG/1.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f87171, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CRAZY CRASH</div>
+                                        <div class="card-subtitle-text">MULTIPLAYER • LIVE ACTION</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>JOIN ROOM</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: POPULAR GAMES (8 CARDS WITH NEON BORDERS & PLAYERS COUNT) -->
+        <section id="popularSection" class="mb-5">
+            <div class="section-header-bar" id="popularHeader">
+                <h2 class="section-header-title">
+                    <i class="fa-solid fa-fire text-danger"></i> Popular Games
+                </h2>
+                <a href="#categorySection" class="btn-view-all">
+                    <span>View All</span> <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="games-grid" id="popularGamesGridContainer">
+                <!-- 1. ROCKET CRASH -->
+                <div class="game-card-stage perspective-stage game-card" data-category="popular crash instant slots" data-name="rocket crash">
+                    <div class="casino-card-container theme-gold" onclick="launchSlotTheater('Rocket Crash', 'art-rocket', 'rocket')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-gold"><i class="fa-solid fa-bolt"></i> 5000X</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/6.png" alt="Rocket Crash" loading="lazy" onerror="this.src='./IMG/6.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #fde047, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ROCKET CRASH</div>
+                                        <div class="card-subtitle-text">254.3K PLAYERS • 5000X</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>LAUNCH</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. CYBER MINES -->
+                <div class="game-card-stage perspective-stage game-card" data-category="popular instant slots table" data-name="cyber mines">
+                    <div class="casino-card-container theme-green" onclick="launchSlotTheater('Cyber Mines', 'art-mines', 'bomb')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-green"><i class="fa-solid fa-shield-halved"></i> VIP</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/4.png" alt="Cyber Mines" loading="lazy" onerror="this.src='./IMG/4.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #6ee7b7, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CYBER MINES</div>
+                                        <div class="card-subtitle-text">198.7K PLAYERS • 98.2% RTP</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. PENALTY GOAL -->
+                <div class="game-card-stage perspective-stage game-card" data-category="popular sports instant live" data-name="penalty goal">
+                    <div class="casino-card-container theme-blue" onclick="launchSlotTheater('Penalty Goal', 'art-penalty', 'ball')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-futbol"></i> POPULAR</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/5.png" alt="Penalty Goal" loading="lazy" onerror="this.src='./IMG/5.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #38bdf8, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PENALTY GOAL</div>
+                                        <div class="card-subtitle-text">175.2K PLAYERS • 97.8% RTP</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>KICK NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. PLINKO VIP -->
+                <div class="game-card-stage perspective-stage game-card" data-category="popular instant bingo slots" data-name="plinko vip">
+                    <div class="casino-card-container theme-magenta" onclick="launchSlotTheater('Plinko VIP', 'art-plinko', 'ball')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-hot"><i class="fa-solid fa-fire"></i> HOT</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/3.png" alt="Plinko VIP" loading="lazy" onerror="this.src='./IMG/3.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f472b6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PLINKO VIP</div>
+                                        <div class="card-subtitle-text">162.4K PLAYERS • 1000X</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>DROP NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. AVIATOR -->
+                <div class="game-card-stage perspective-stage game-card" data-category="popular crash slots instant" data-name="aviator">
+                    <div class="casino-card-container theme-red" onclick="launchSlotTheater('Aviator', 'art-aviator', 'plane')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-live"><i class="fa-solid fa-circle"></i> LIVE</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/1.png" alt="Aviator" loading="lazy" onerror="this.src='./IMG/avi.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f87171, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AVIATOR</div>
+                                        <div class="card-subtitle-text">289.1K PLAYERS • MULTI</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>FLY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. LUCKY DICE -->
+                <div class="game-card-stage perspective-stage game-card" data-category="popular table instant live" data-name="lucky dice">
+                    <div class="casino-card-container theme-purple" onclick="launchSlotTheater('Lucky Dice', 'art-dice', 'dice')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-dice"></i> TOP</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/2.png" alt="Lucky Dice" loading="lazy" onerror="this.src='./IMG/2.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #c084fc, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">LUCKY DICE</div>
+                                        <div class="card-subtitle-text">142.6K PLAYERS • 98.6% RTP</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>ROLL NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. JET FLIGHT -->
+                <div class="game-card-stage perspective-stage game-card" data-category="popular crash live instant" data-name="jet flight">
+                    <div class="casino-card-container theme-blue" onclick="launchSlotTheater('Jet Flight', 'art-jet', 'plane')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-cyan"><i class="fa-solid fa-plane-departure"></i> FAST</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/avi.png" alt="Jet Flight" loading="lazy" onerror="this.src='./IMG/avi.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #38bdf8, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">JET FLIGHT</div>
+                                        <div class="card-subtitle-text">131.9K PLAYERS • HIGH WIN</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>FLY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. CRASH ROYALE -->
+                <div class="game-card-stage perspective-stage game-card" data-category="popular crash live table" data-name="crash royale">
+                    <div class="casino-card-container theme-red" onclick="launchSlotTheater('Crash Royale', 'art-crazycrash', 'wheel')">
+                        <div class="card-ground-reflection"></div>
+                        <div class="neon-filter-wrap">
+                            <div class="card-outer-bezel">
+                                <div class="card-inner-chassis">
+                                    <div class="top-notch-tab"></div>
+                                    <span class="card-floating-badge badge-hot"><i class="fa-solid fa-fire"></i> 24/7</span>
+                                    <div class="card-specular-glare"></div>
+                                    <div class="card-grid-texture"></div>
+                                    <div class="card-artwork-layer">
+                                        <img src="./IMG/1.png" alt="Crash Royale" loading="lazy" onerror="this.src='./IMG/1.png'">
+                                    </div>
+                                    <div class="card-vignette"></div>
+                                    <div class="card-content-deck">
+                                        <div class="card-title-text" style="background: linear-gradient(180deg, #fff, #f87171, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CRASH ROYALE</div>
+                                        <div class="card-subtitle-text">118.5K PLAYERS • ROOM</div>
+                                        <a href="javascript:void(0)" class="btn-play-neon">
+                                            <span>JOIN ROOM</span> <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 4: 3-COLUMN SHOWCASE (NEW & HOT, LIVE CASINO, SPORTS & VIRTUAL) -->
+        <div class="tri-showcase-grid">
+            
+            <!-- Block 1: New & Hot -->
+            <div class="showcase-block-panel">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold text-light text-uppercase d-flex align-items-center gap-2" style="font-size: 0.88rem; font-family: 'Rajdhani', sans-serif;">
+                        <i class="fa-solid fa-fire text-danger"></i> New & Hot
+                    </span>
+                    <a href="javascript:void(0)" class="btn-view-all py-1 px-2" style="font-size: 0.72rem;">View All <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="mini-showcase-grid">
+                    <div class="mini-game-card" onclick="launchSlotTheater('Sugar Rush', 'art-sugarrush', 'candy')">
+                        <span class="mini-badge mini-badge-new">NEW</span>
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#4a044e"/><circle cx="40" cy="34" r="18" fill="#f43f5e"/><circle cx="40" cy="34" r="7" fill="#fff"/></svg>
+                        </div>
+                        <div class="mini-game-label">Sugar Rush</div>
+                    </div>
+                    <div class="mini-game-card" onclick="launchSlotTheater('Bigger Bass Bonanza', 'art-biggerbass', 'fish')">
+                        <span class="mini-badge mini-badge-hot">HOT</span>
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#082f49"/><circle cx="40" cy="34" r="16" fill="#10b981"/><path d="M 25 34 Q 40 18 55 34" stroke="#facc15" stroke-width="2" fill="none"/></svg>
+                        </div>
+                        <div class="mini-game-label">Bigger Bass</div>
+                    </div>
+                    <div class="mini-game-card" onclick="launchSlotTheater('Fortune Tiger', 'art-tiger', 'tiger')">
+                        <span class="mini-badge mini-badge-new">NEW</span>
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#451a03"/><circle cx="40" cy="34" r="16" fill="#f59e0b"/><polygon points="40,25 46,38 34,38" fill="#b45309"/></svg>
+                        </div>
+                        <div class="mini-game-label">Fortune Tiger</div>
+                    </div>
+                    <div class="mini-game-card" onclick="launchSlotTheater('Zeus vs Hades', 'art-hades', 'zeus')">
+                        <span class="mini-badge mini-badge-hot">HOT</span>
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#1e1b4b"/><polygon points="30,15 50,15 40,55" fill="#38bdf8"/><polygon points="50,15 70,15 60,55" fill="#ef4444"/></svg>
+                        </div>
+                        <div class="mini-game-label">Zeus vs Hades</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 2: Live Casino -->
+            <div class="showcase-block-panel">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold text-light text-uppercase d-flex align-items-center gap-2" style="font-size: 0.88rem; font-family: 'Rajdhani', sans-serif;">
+                        <i class="fa-solid fa-user-tie text-warning"></i> Live Casino
+                    </span>
+                    <a href="javascript:void(0)" class="btn-view-all py-1 px-2" style="font-size: 0.72rem;">View All <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="mini-showcase-grid">
+                    <div class="mini-game-card" onclick="launchSlotTheater('Live Roulette', 'art-live-roulette', 'roulette')">
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#290707"/><circle cx="40" cy="26" r="12" fill="#fde047"/><path d="M 22 55 Q 40 38 58 55 Z" fill="#b91c1c"/></svg>
+                        </div>
+                        <div class="mini-game-label">Roulette</div>
+                    </div>
+                    <div class="mini-game-card" onclick="launchSlotTheater('Live Blackjack', 'art-live-blackjack', 'cards')">
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#042f2e"/><circle cx="40" cy="26" r="12" fill="#fde047"/><path d="M 22 55 Q 40 38 58 55 Z" fill="#0d9488"/></svg>
+                        </div>
+                        <div class="mini-game-label">Blackjack</div>
+                    </div>
+                    <div class="mini-game-card" onclick="launchSlotTheater('Live Baccarat', 'art-live-baccarat', 'cards')">
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#2e1065"/><circle cx="40" cy="26" r="12" fill="#fde047"/><path d="M 22 55 Q 40 38 58 55 Z" fill="#7c3aed"/></svg>
+                        </div>
+                        <div class="mini-game-label">Baccarat</div>
+                    </div>
+                    <div class="mini-game-card" onclick="launchSlotTheater('Live Dragon Tiger', 'art-live-dragon', 'cards')">
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#450a0a"/><circle cx="40" cy="26" r="12" fill="#fde047"/><path d="M 22 55 Q 40 38 58 55 Z" fill="#ea580c"/></svg>
+                        </div>
+                        <div class="mini-game-label">Dragon Tiger</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 3: Sports & Virtual -->
+            <div class="showcase-block-panel">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold text-light text-uppercase d-flex align-items-center gap-2" style="font-size: 0.88rem; font-family: 'Rajdhani', sans-serif;">
+                        <i class="fa-solid fa-futbol text-info"></i> Sports & Virtual
+                    </span>
+                    <a href="javascript:void(0)" class="btn-view-all py-1 px-2" style="font-size: 0.72rem;">View All <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="mini-showcase-grid">
+                    <div class="mini-game-card" onclick="showToast('Live Sports Portal Loaded')">
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#064e3b"/><circle cx="40" cy="34" r="18" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="40" cy="34" r="6" fill="#000"/></svg>
+                        </div>
+                        <div class="mini-game-label">Live Sports</div>
+                    </div>
+                    <div class="mini-game-card" onclick="showToast('Virtual Sports Loaded')">
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#14532d"/><polygon points="20,50 45,25 65,40 50,55" fill="#f59e0b"/></svg>
+                        </div>
+                        <div class="mini-game-label">Virtual Sports</div>
+                    </div>
+                    <div class="mini-game-card" onclick="showToast('Esports Hub Loaded')">
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#311042"/><rect x="22" y="22" width="36" height="24" rx="6" fill="#a855f7"/><circle cx="30" cy="34" r="3" fill="#fff"/><circle cx="50" cy="34" r="3" fill="#fff"/></svg>
+                        </div>
+                        <div class="mini-game-label">Esports</div>
+                    </div>
+                    <div class="mini-game-card" onclick="showToast('Virtual Racing Loaded')">
+                        <div class="mini-art-thumb">
+                            <svg viewBox="0 0 80 68" width="100%" height="100%"><rect width="80" height="68" fill="#78350f"/><path d="M 20 48 Q 40 22 62 45" stroke="#fde047" stroke-width="3" fill="none"/></svg>
+                        </div>
+                        <div class="mini-game-label">Virtual Racing</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECTION 5: PROMOTIONS & JACKPOTS BANNER -->
+        <div class="promo-jackpot-banner">
+            <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px; background: rgba(245, 179, 0, 0.18); border: 2px solid #f5b300; box-shadow: 0 0 15px rgba(245, 179, 0, 0.4);">
+                    <i class="fa-solid fa-trophy fs-4 text-warning"></i>
+                </div>
+                <div>
+                    <h3 class="promo-heading mb-1">PROMOTIONS & JACKPOTS</h3>
+                    <p class="promo-subtext">Daily Bonuses • Tournaments • Exclusive Offers</p>
+                </div>
+            </div>
+
+            <div class="promo-gift-icon-wrap text-center my-2 my-lg-0">
+                <div class="promo-gift-box">🎁</div>
+                <div class="text-start">
+                    <div class="fw-bold text-light" style="font-size: 0.95rem; letter-spacing: 0.5px;">BIGGER WINS. MORE REWARDS.</div>
+                    <div class="small text-warning-subtle" style="font-size: 0.76rem;">Join our daily tournaments and claim your bonuses!</div>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" class="btn-gold-action px-4 py-2" onclick="showToast('Viewing Daily Promotions & VIP Jackpots!')">
+                    <span>View Promotions</span> <i class="fa-solid fa-arrow-right ms-1"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+
+
+    <!-- BOTTOM STATION DOCK -->
+    <footer class="smart-pc-dock">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            
+            <!-- Left: Shop Name & Location (Bottom Left: Windhoek Central · Independence Ave, Windhoek) -->
+            <div class="brand-security-seal">
+                <div class="gold-seal-ring">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                    <span class="fw-bold d-block text-light" style="font-size: 0.84rem;">Windhoek Central</span>
+                    <span class="d-block" style="font-size: 0.72rem; color: #a491ca;">Independence Ave, Windhoek</span>
+                </div>
+            </div>
+
+            <!-- Middle: Quick Bet Presets -->
+            <div class="d-none d-lg-flex align-items-center gap-2">
+                <span class="text-secondary small fw-semibold">DEFAULT BET:</span>
+                <button class="btn btn-sm btn-outline-secondary text-light py-1 px-3 rounded-pill active-bet" id="betVal10" onclick="setDefaultBet(10)" style="border-color: #59259c;">N$ 10</button>
+                <button class="btn btn-sm btn-outline-secondary text-light py-1 px-3 rounded-pill" id="betVal25" onclick="setDefaultBet(25)" style="border-color: #59259c;">N$ 25</button>
+                <button class="btn btn-sm btn-outline-secondary text-light py-1 px-3 rounded-pill" id="betVal50" onclick="setDefaultBet(50)" style="border-color: #59259c;">N$ 50</button>
+                <button class="btn btn-sm btn-outline-secondary text-light py-1 px-3 rounded-pill" id="betVal100" onclick="setDefaultBet(100)" style="border-color: #59259c;">N$ 100</button>
+            </div>
+
+            <!-- Right: Dock Cashout Action Trigger -->
+            <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-outline-warning py-2 px-3 rounded-3 fw-bold" onclick="handlePrimaryAction()" style="font-size: 0.85rem; border-color: #f5b300; color: #ffdc69;">
+                    <i class="fa-solid fa-circle-check me-1"></i>
+                    <span id="dockActionText">Cash Out</span>
+                </button>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ==============================================================
+         FLOW 2 — SCREEN 4: SMART PC CASH OUT CONFIRMATION MODAL
+         Amount: N$ 250.00 | Buttons: Confirm & Cancel (NO TICKET PRINTED)
+    =============================================================== -->
+    <div class="modal fade modal-theme-dark" id="smartpcCashoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
+            <div class="modal-content">
+                <div class="modal-body p-4 text-center">
+                    
+                    <!-- Brand Header -->
+                    <!-- <div class="winbet-logo justify-content-center mb-3">
+                        <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img">
+                    </div> -->
+
+                    <!-- Inner Indented Cash Out Panel -->
+                    <div class="inner-cashout-panel">
+                        <h3 class="panel-heading">Cash Out</h3>
+                        <p class="panel-label">Amount</p>
+                        <div class="panel-amount">
+                            <span class="currency-symbol">N$</span>
+                            <span id="smartpcModalAmount">250.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Actions: Confirm & Cancel -->
+                    <div class="d-flex flex-column gap-2 mt-3">
+                        <button type="button" class="btn-purple-action" onclick="confirmSmartPCCashout()">
+                            <i class="fa-solid fa-check"></i>
+                            <span>Confirm</span>
+                        </button>
+                        <button type="button" class="btn-cancel-action" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+
+                    <p class="text-dim small mt-3 mb-0" style="font-size: 0.76rem;">
+                        Cashier will redeem your balance at the counter.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         FLOW 3 — SCREEN 6: TERMINAL CASHOUT CONFIRMATION MODAL
+         Heading: Print Cashout Ticket | Amount: N$ 170.00 | Print Ticket / Cancel
+    =============================================================== -->
+    <div class="modal fade modal-theme-dark" id="terminalConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
+            <div class="modal-content">
+                <div class="modal-body p-4 text-center">
+                    
+                    <!-- Step 4 Pill -->
+                    <div class="step-pill-box">
+                        <span class="badge-circle">4</span>
+                        <span class="pill-text">Print Cashout Ticket</span>
+                    </div>
+
+                    <!-- Brand Header -->
+                    <!-- <div class="winbet-logo justify-content-center mb-3">
+                        <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img">
+                    </div> -->
+
+                    <!-- Inner Indented Panel -->
+                    <div class="inner-cashout-panel">
+                        <h3 class="panel-heading">Print Cashout Ticket</h3>
+                        <p class="panel-label">Amount</p>
+                        <div class="panel-amount">
+                            <span class="currency-symbol">N$</span>
+                            <span id="terminalModalAmount">170.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Actions: Print Ticket & Cancel -->
+                    <div class="d-flex flex-column gap-2 mt-3">
+                        <button type="button" class="btn-purple-action" onclick="executePrintTerminalTicket()">
+                            <i class="fa-solid fa-print"></i>
+                            <span>Print Ticket</span>
+                        </button>
+                        <button type="button" class="btn-cancel-action" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+
+                    <p class="text-dim small mt-3 mb-0" style="font-size: 0.76rem;">
+                        Note: Take ticket to Cashier redeem or scan on a Terminal in this shop.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         FLOW 3 — SCREEN 7: TICKET PRINTED SUCCESSFULLY MODAL
+         Success checkmark | TKT# 88421 | N$ 170.00 | Back to Games
+    =============================================================== -->
+    <div class="modal fade modal-theme-dark" id="ticketSuccessModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
+            <div class="modal-content">
+                <div class="modal-body p-4 text-center">
+                    
+                    <!-- Step 5 Pill -->
+                    <div class="step-pill-box justify-content-center mb-2">
+                        <span class="badge-circle">5</span>
+                        <span class="pill-text">Ticket Printed!</span>
+                    </div>
+
+                    <!-- WinBet Central Brand Header -->
+                    <!-- <div class="winbet-logo justify-content-center mb-2">
+                        <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img logo-sm">
+                    </div> -->
+
+                    <!-- Glowing Emerald Green Checkmark -->
+                    <div class="neon-success-circle-wrap">
+                        <div class="neon-success-circle">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                    </div>
+
+                    <!-- "Ticket Printed Successfully" heading -->
+                    <h3 class="success-text-heading">Ticket Printed Successfully</h3>
+
+                    <!-- Ticket Meta Details -->
+                    <div class="ticket-info-block">
+                        <p class="tkt-number" id="successTicketNum">TKT-88421</p>
+                        <p class="tkt-amount" id="successTicketAmount">N$ 170.00</p>
+                    </div>
+
+                    <!-- Cashier Redemption Instructions -->
+                    <p class="cashier-notice-text">
+                        * Take this ticket to the Cashier to redeem<br>
+                        <span class="text-secondary">OR Scan this ticket on a Terminal in this shop</span>
+                    </p>
+
+                    <!-- Button: Back to Games -->
+                    <div class="d-flex flex-column gap-2 mt-2">
+                        <button type="button" class="btn-purple-action" data-bs-dismiss="modal" onclick="returnBackToGames()">
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                            <span>Back to Games</span>
+                        </button>
+                    </div>
+
+                    <p class="text-dim small mt-3 mb-0" style="font-size: 0.76rem;">
+                        Balance goes to N$ 0.00
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE SLOT MACHINE THEATER MODAL -->
+    <div class="modal fade" id="slotGameModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content slot-theater-body">
+                
+                <div class="d-flex justify-content-between align-items-center px-4 py-3 border-bottom" style="border-color: rgba(139, 61, 255, 0.3) !important;">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="fa-solid fa-crown text-warning fs-4"></i>
+                        <div>
+                            <h4 class="m-0 fw-bold text-light" id="theaterGameTitle">Gates of Olympus</h4>
+                            <span class="badge bg-purple-900 border border-purple-500 small" id="theaterModeBadge" style="font-size: 0.7rem; color: #d8b4fe; background:#1c093a;">REAL PLAY MODE</span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body p-4 text-center">
+                    <div id="slotWinBanner" class="alert alert-dark border border-warning text-warning fw-bold py-2 mb-3 d-none" style="background: rgba(245, 179, 0, 0.1);">
+                        <i class="fa-solid fa-champagne-glasses me-2"></i> BIG WIN! YOU WON <span id="winAmountText">N$ 150.00</span>!
+                    </div>
+
+                    <div class="reels-container">
+                        <div class="reel-window" id="reel1">⚡</div>
+                        <div class="reel-window" id="reel2">👑</div>
+                        <div class="reel-window" id="reel3">💎</div>
+                    </div>
+
+                    <div class="d-flex flex-wrap justify-content-between align-items-center bg-dark p-3 rounded-4 border border-secondary mt-3" style="border-color: #3b1473 !important; background-color: #0b031c !important;">
+                        <div class="text-start">
+                            <span class="text-secondary small d-block">SESSION BALANCE</span>
+                            <span class="fw-bold fs-4 text-warning" id="modalBalanceDisplay">N$ 250.00</span>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="btn btn-sm btn-outline-secondary text-light px-2" onclick="adjustSpinBet(-5)">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <div class="text-center px-2">
+                                <span class="text-secondary small d-block">BET PER SPIN</span>
+                                <span class="fw-bold fs-5 text-light" id="currentBetDisplay">N$ 10.00</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-secondary text-light px-2" onclick="adjustSpinBet(5)">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+
+                        <div>
+                            <button type="button" id="btnSpinReels" class="btn-gold-action px-4 py-2 fs-5" onclick="spinReelsAction()">
+                                <i class="fa-solid fa-rotate me-1"></i> SPIN!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toastNotification" class="winbet-toast">
+        <i class="fa-solid fa-circle-check text-success fs-5"></i>
+        <span id="toastContent" class="small fw-semibold">Action completed successfully!</span>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // System State
+        const stationState = {
+            mode: 'smartpc', // 'smartpc' or 'terminal'
+            machineName: 'Smart PC-03',
+            shopName: 'Windhoek Central',
+            balance: 250.00,
+            currentBet: 10.00,
+            soundEnabled: true,
+            isSpinning: false,
+            jackpotAmount: 1483061.04,
+            ticketCounter: 88421
+        };
+
+        // Web Audio Synthesizer
+        let audioCtx = null;
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) audioCtx = new AudioContext();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playTone(type) {
+            if (!stationState.soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                if (type === 'click') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(600, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'spin') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(250, now);
+                    osc.frequency.linearRampToValueAtTime(450, now + 0.15);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'print') {
+                    [320, 280, 340, 300].forEach((freq, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(freq, now + i * 0.07);
+                        gain.gain.setValueAtTime(0.06, now + i * 0.07);
+                        gain.gain.linearRampToValueAtTime(0.01, now + i * 0.07 + 0.05);
+                        osc.start(now + i * 0.07);
+                        osc.stop(now + i * 0.07 + 0.05);
+                    });
+                } else if (type === 'win') {
+                    [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.type = 'square';
+                        osc.frequency.setValueAtTime(freq, now + i * 0.08);
+                        gain.gain.setValueAtTime(0.1, now + i * 0.08);
+                        gain.gain.linearRampToValueAtTime(0.001, now + i * 0.08 + 0.14);
+                        osc.start(now + i * 0.08);
+                        osc.stop(now + i * 0.08 + 0.14);
+                    });
+                }
+            } catch (e) {}
+        }
+
+        // Initialize Machine Mode
+        function setMachineMode(mode) {
+            playTone('click');
+            stationState.mode = mode;
+
+            const btnSmartPC = document.getElementById('btnModeSmartPC');
+            const btnTerminal = document.getElementById('btnModeTerminal');
+            const stationCode = document.getElementById('stationCodeDisplay');
+            const primaryText = document.getElementById('primaryActionText');
+            const primaryIcon = document.getElementById('primaryActionIcon');
+            const dockText = document.getElementById('dockActionText');
+
+            if (mode === 'smartpc') {
+                btnSmartPC.classList.add('active');
+                btnTerminal.classList.remove('active');
+                stationState.machineName = 'Smart PC-03';
+                stationState.balance = 250.00;
+                stationCode.innerText = 'Smart PC-03';
+                primaryText.innerText = 'Cash Out';
+                primaryIcon.className = 'fa-solid fa-money-bill-transfer';
+                dockText.innerText = 'Cash Out';
+                const billPrompt = document.getElementById('btnInsertBillPrompt');
+                if (billPrompt) billPrompt.style.display = 'none';
+                showToast('Switched to Smart PC Mode (Cashier Credit)');
+            } else {
+                btnTerminal.classList.add('active');
+                btnSmartPC.classList.remove('active');
+                stationState.machineName = 'Terminal-02';
+                stationState.balance = 170.00;
+                stationCode.innerText = 'Terminal-02';
+                primaryText.innerText = 'Print Cashout Ticket';
+                primaryIcon.className = 'fa-solid fa-print';
+                dockText.innerText = 'Print Cashout Ticket';
+                const billPrompt = document.getElementById('btnInsertBillPrompt');
+                if (billPrompt) billPrompt.style.display = 'inline-block';
+                showToast('Switched to Terminal Mode (Bill Acceptor)');
+            }
+
+            refreshBalanceUI();
+        }
+
+        // Refresh Balance Display
+        function refreshBalanceUI() {
+            const formatted = 'N$ ' + stationState.balance.toFixed(2);
+            document.getElementById('playerBalanceDisplay').innerText = formatted;
+            document.getElementById('modalBalanceDisplay').innerText = formatted;
+            document.getElementById('smartpcModalAmount').innerText = stationState.balance.toFixed(2);
+            document.getElementById('terminalModalAmount').innerText = stationState.balance.toFixed(2);
+            document.getElementById('successTicketAmount').innerText = formatted;
+        }
+
+        // Primary Action Trigger (Smart PC vs Terminal)
+        function handlePrimaryAction() {
+            playTone('click');
+            if (stationState.balance <= 0) {
+                showToast('Session balance is N$ 0.00. No funds to cash out.');
+                return;
+            }
+
+            if (stationState.mode === 'smartpc') {
+                // FLOW 2 — SCREEN 4: Smart PC Cash Out Confirmation Modal
+                refreshBalanceUI();
+                const modal = new bootstrap.Modal(document.getElementById('smartpcCashoutModal'));
+                modal.show();
+            } else {
+                // FLOW 3 — SCREEN 6: Terminal Cashout Confirmation Modal
+                refreshBalanceUI();
+                const modal = new bootstrap.Modal(document.getElementById('terminalConfirmModal'));
+                modal.show();
+            }
+        }
+
+        // Smart PC Cash Out Confirm (NO TICKET PRINTED)
+        function confirmSmartPCCashout() {
+            playTone('win');
+            const modalEl = document.getElementById('smartpcCashoutModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+
+            showToast(`Cash Out of N$ ${stationState.balance.toFixed(2)} confirmed! Cashier will redeem at counter.`);
+            stationState.balance = 0.00;
+            refreshBalanceUI();
+        }
+
+        // Terminal Execute Print Ticket
+        function executePrintTerminalTicket() {
+            playTone('print');
+            const confirmModalEl = document.getElementById('terminalConfirmModal');
+            const confirmModal = bootstrap.Modal.getInstance(confirmModalEl);
+            if (confirmModal) confirmModal.hide();
+
+            // Generate Ticket
+            stationState.ticketCounter = Math.floor(88000 + Math.random() * 999);
+            const ticketStr = `TKT-${stationState.ticketCounter}`;
+            document.getElementById('successTicketNum').innerText = ticketStr;
+            document.getElementById('successTicketAmount').innerText = 'N$ ' + stationState.balance.toFixed(2);
+
+            setTimeout(() => {
+                playTone('win');
+                // FLOW 3 — SCREEN 7: Ticket Printed Successfully Modal
+                const successModal = new bootstrap.Modal(document.getElementById('ticketSuccessModal'));
+                successModal.show();
+                showToast(`Ticket ${ticketStr} Printed Successfully!`);
+            }, 600);
+        }
+
+        // Return Back to Games after Ticket Printing (Balance resets to N$ 0.00)
+        function returnBackToGames() {
+            playTone('click');
+            stationState.balance = 0.00;
+            refreshBalanceUI();
+            showToast('Ready for new session. Insert cash into bill acceptor.');
+        }
+
+        // Physical Bill Acceptor Hardware Simulation (+N$ 70.00)
+        function simulateHardwareBillInsert() {
+            playTone('click');
+            stationState.balance += 70.00;
+            refreshBalanceUI();
+            playTone('win');
+            showToast('Bill Acceptor: Accepted N$ 70.00 cash note!');
+        }
+
+        // Category Filter & Search State for Category Section
+        let currentFilter = 'all';
+
+        function filterCategory(element, catKey) {
+            playTone('click');
+            currentFilter = catKey;
+
+            // Update active state in tabs
+            document.querySelectorAll('#categoryTabs .cat-pill').forEach(pill => pill.classList.remove('active'));
+            if (element) {
+                element.classList.add('active');
+            } else {
+                const targetPill = document.querySelector(`#categoryTabs .cat-pill[data-cat="${catKey}"]`) || document.querySelector('#categoryTabs .cat-pill');
+                if (targetPill) targetPill.classList.add('active');
+            }
+
+            // Clear search when changing category pill
+            const searchInput = document.getElementById('gameSearchInput');
+            if (searchInput) searchInput.value = '';
+
+            applyCategoryFilter(catKey, '');
+        }
+
+        function filterCategoryByPill(catKey) {
+            const pill = document.querySelector(`#categoryTabs .cat-pill[data-cat="${catKey}"]`);
+            filterCategory(pill, catKey);
+        }
+
+        function resetCategoryFilter() {
+            const allPill = document.querySelector('#categoryTabs .cat-pill[data-cat="all"]');
+            filterCategory(allPill, 'all');
+        }
+
+        function handleGameSearch(keyword) {
+            const query = keyword.toLowerCase().trim();
+            applyCategoryFilter(currentFilter, query);
+        }
+
+        function applyCategoryFilter(catKey, searchQuery) {
+            const catGrid = document.getElementById('categoryGamesGridContainer');
+            const noGamesState = document.getElementById('noGamesFoundState');
+            const countBadge = document.getElementById('gameCountBadge');
+
+            if (!catGrid) return;
+
+            const cards = catGrid.querySelectorAll('.game-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const cardCats = (card.getAttribute('data-category') || '').split(' ');
+                const cardName = (card.getAttribute('data-name') || '').toLowerCase();
+
+                const matchesCategory = (catKey === 'all' || cardCats.includes(catKey));
+                const matchesSearch = !searchQuery || cardName.includes(searchQuery) || cardCats.some(c => c.includes(searchQuery));
+
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (countBadge) {
+                countBadge.innerText = visibleCount;
+            }
+
+            if (noGamesState) {
+                if (visibleCount === 0) {
+                    noGamesState.classList.remove('d-none');
+                } else {
+                    noGamesState.classList.add('d-none');
+                }
+            }
+        }
+
+        // Grid Density Mode Switch
+        function setGridDensity(mode) {
+            playTone('click');
+            const grid = document.getElementById('gamesGridContainer');
+            grid.classList.remove('density-compact', 'density-cozy', 'density-expanded');
+            grid.classList.add('density-' + mode);
+            document.querySelectorAll('.density-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Set Default Bet Quick Bar
+        function setDefaultBet(val) {
+            playTone('click');
+            stationState.currentBet = val;
+            document.getElementById('currentBetDisplay').innerText = 'N$ ' + val.toFixed(2);
+            [10, 25, 50, 100].forEach(v => {
+                const btn = document.getElementById('betVal' + v);
+                if (btn) btn.classList.remove('btn-warning', 'text-dark', 'fw-bold');
+            });
+            const activeBtn = document.getElementById('betVal' + val);
+            if (activeBtn) activeBtn.classList.add('btn-warning', 'text-dark', 'fw-bold');
+            showToast(`Default Bet: N$ ${val}`);
+        }
+
+        // Interactive Slot Theater Modal
+        let slotModalInstance = null;
+        function launchSlotTheater(gameTitle, bgClass, symbolType, isDemo = false) {
+            playTone('click');
+            document.getElementById('theaterGameTitle').innerText = gameTitle;
+            const badge = document.getElementById('theaterModeBadge');
+            badge.innerText = isDemo ? 'PRACTICE DEMO' : 'REAL PLAY MODE';
+            document.getElementById('slotWinBanner').classList.add('d-none');
+            refreshBalanceUI();
+
+            const modalEl = document.getElementById('slotGameModal');
+            slotModalInstance = new bootstrap.Modal(modalEl);
+            slotModalInstance.show();
+        }
+
+        function adjustSpinBet(diff) {
+            playTone('click');
+            const newBet = stationState.currentBet + diff;
+            if (newBet >= 5 && newBet <= 500) {
+                stationState.currentBet = newBet;
+                document.getElementById('currentBetDisplay').innerText = 'N$ ' + newBet.toFixed(2);
+            }
+        }
+
+        const slotSymbols = ['🍒', '🍋', '🍇', '💎', '👑', '⚡', '7️⃣'];
+        function spinReelsAction() {
+            if (stationState.isSpinning) return;
+            if (stationState.balance < stationState.currentBet) {
+                showToast('Insufficient Balance! Please adjust bet.');
+                return;
+            }
+
+            stationState.balance -= stationState.currentBet;
+            refreshBalanceUI();
+            stationState.isSpinning = true;
+            document.getElementById('slotWinBanner').classList.add('d-none');
+            document.getElementById('btnSpinReels').disabled = true;
+
+            playTone('spin');
+
+            const reel1 = document.getElementById('reel1');
+            const reel2 = document.getElementById('reel2');
+            const reel3 = document.getElementById('reel3');
+
+            reel1.classList.add('reel-spinning');
+            reel2.classList.add('reel-spinning');
+            reel3.classList.add('reel-spinning');
+
+            setTimeout(() => {
+                reel1.classList.remove('reel-spinning');
+                reel1.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                playTone('click');
+            }, 550);
+
+            setTimeout(() => {
+                reel2.classList.remove('reel-spinning');
+                reel2.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                playTone('click');
+            }, 850);
+
+            setTimeout(() => {
+                reel3.classList.remove('reel-spinning');
+                if (Math.random() < 0.4) {
+                    reel3.innerText = reel2.innerText;
+                } else {
+                    reel3.innerText = slotSymbols[Math.floor(Math.random() * slotSymbols.length)];
+                }
+                playTone('click');
+
+                const isThreeMatch = (reel1.innerText === reel2.innerText && reel2.innerText === reel3.innerText);
+                const isTwoMatch = (reel1.innerText === reel2.innerText || reel2.innerText === reel3.innerText);
+
+                if (isThreeMatch) {
+                    const winVal = stationState.currentBet * 10;
+                    stationState.balance += winVal;
+                    showWinNotification(winVal);
+                } else if (isTwoMatch) {
+                    const winVal = stationState.currentBet * 2.5;
+                    stationState.balance += winVal;
+                    showWinNotification(winVal);
+                }
+
+                refreshBalanceUI();
+                stationState.isSpinning = false;
+                document.getElementById('btnSpinReels').disabled = false;
+            }, 1200);
+        }
+
+        function showWinNotification(amount) {
+            playTone('win');
+            const banner = document.getElementById('slotWinBanner');
+            document.getElementById('winAmountText').innerText = 'N$ ' + amount.toFixed(2);
+            banner.classList.remove('d-none');
+            showToast(`🎉 You Won N$ ${amount.toFixed(2)}!`);
+        }
+
+        // Audio Toggle
+        function toggleAudio() {
+            stationState.soundEnabled = !stationState.soundEnabled;
+            const icon = document.getElementById('audioIcon');
+            if (stationState.soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high';
+                showToast('Audio Effects: ON');
+                playTone('click');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark';
+                showToast('Audio Effects: MUTED');
+            }
+        }
+
+        // Fullscreen Toggle
+        function toggleDesktopFullscreen() {
+            playTone('click');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+                showToast('Fullscreen Station Mode');
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+
+        // Digital Clock
+        function updateClock() {
+            const clockEl = document.getElementById('digitalClock');
+            if (!clockEl) return;
+            const now = new Date();
+            clockEl.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Increment Live Jackpot
+        setInterval(() => {
+            stationState.jackpotAmount += (Math.random() * 0.35);
+            document.getElementById('liveJackpotMeter').innerText = 'N$ ' + stationState.jackpotAmount.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }, 1200);
+
+        // Toast Handler
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            const text = document.getElementById('toastContent');
+            text.innerText = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // 3D Card Tilt & Specular Glare System
+        function initCard3DTilt() {
+            const maxTilt = 14;
+            document.querySelectorAll('.casino-card-container').forEach(cardContainer => {
+                const specularGlare = cardContainer.querySelector('.card-specular-glare');
+                
+                cardContainer.addEventListener('mousemove', (e) => {
+                    const rect = cardContainer.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = -((y - centerY) / centerY) * maxTilt;
+                    const rotateY = ((x - centerX) / centerX) * maxTilt;
+                    
+                    cardContainer.style.transform = `perspective(1100px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.03, 1.03, 1.03)`;
+                    
+                    if (specularGlare) {
+                        const pctX = (x / rect.width) * 100;
+                        const pctY = (y / rect.height) * 100;
+                        specularGlare.style.setProperty('--mouse-x', `${pctX}%`);
+                        specularGlare.style.setProperty('--mouse-y', `${pctY}%`);
+                    }
+                });
+
+                cardContainer.addEventListener('mouseleave', () => {
+                    cardContainer.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                });
+
+                cardContainer.addEventListener('touchmove', (e) => {
+                    if (!e.touches[0]) return;
+                    const rect = cardContainer.getBoundingClientRect();
+                    const x = e.touches[0].clientX - rect.left;
+                    const y = e.touches[0].clientY - rect.top;
+                    const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 10;
+                    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 10;
+                    cardContainer.style.transform = `perspective(1100px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+                }, { passive: true });
+
+                cardContainer.addEventListener('touchend', () => {
+                    cardContainer.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                });
+            });
+        }
+
+        // Dynamic Progressive Jackpot Live Meter
+        let currentJackpotAmount = 1483061.04;
+        function initLiveJackpotTicker() {
+            const meterEl = document.getElementById('liveJackpotMeter');
+            if (!meterEl) return;
+            
+            setInterval(() => {
+                const increment = (Math.random() * 0.85) + 0.15;
+                currentJackpotAmount += increment;
+                meterEl.innerText = 'N$ ' + currentJackpotAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }, 2600);
+        }
+
+        // Initialize on load from URL or saved session
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const modeParam = urlParams.get('mode') || localStorage.getItem('winbet_machine_type') || 'smartpc';
+            setMachineMode(modeParam === 'terminal' ? 'terminal' : 'smartpc');
+            initCard3DTilt();
+            initLiveJackpotTicker();
+            const totalGames = document.querySelectorAll('#categoryGamesGridContainer .game-card').length;
+            const countBadge = document.getElementById('gameCountBadge');
+            if (countBadge && totalGames) {
+                countBadge.innerText = totalGames;
+            }
+        });
+    </script>
+</body>
+</html>

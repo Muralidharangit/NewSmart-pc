@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyberpunk Game Card (300x400 Shape & 3D Tilt)</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:ital,wght@0,800;0,900;1,900&family=Rajdhani:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-canvas: #05070e;
+      --card-w: 300px;
+      --card-h: 400px;
+      --cut-size: 24px;
+      --cut-inner: 22px;
+      
+      /* Active Theme Variables (Default: Crash Red) */
+      --neon-primary: #ff123d;
+      --neon-glow: rgba(255, 18, 61, 0.7);
+      --neon-glow-soft: rgba(255, 18, 61, 0.28);
+      --neon-accent: #ff4866;
+      --sub-color: #facc15;
+      --btn-base: #5a0712;
+      --btn-border: #ff334b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      background-image: 
+        radial-gradient(circle at 50% 10%, rgba(120, 20, 80, 0.22) 0%, transparent 50%),
+        radial-gradient(circle at 80% 90%, rgba(20, 80, 160, 0.15) 0%, transparent 40%),
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 3D Perspective Stage */
+    .perspective-stage {
+      perspective: 1100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    /* Fixed 300x400 Card Container */
+    .casino-card-container {
+      position: relative;
+      width: var(--card-w);
+      height: var(--card-h);
+      cursor: pointer;
+      user-select: none;
+      transform-style: preserve-3d;
+      transition: transform 0.12s ease-out;
+      will-change: transform;
+    }
+
+    /* Under-Card Glowing 3D Pedestal / Base Light */
+    .card-ground-reflection {
+      position: absolute;
+      bottom: -18px;
+      left: 12%;
+      width: 76%;
+      height: 22px;
+      background: radial-gradient(ellipse at center, var(--neon-primary) 0%, var(--neon-glow-soft) 55%, transparent 75%);
+      filter: blur(10px);
+      border-radius: 50%;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 1;
+      transform: translateZ(-20px);
+    }
+
+    .casino-card-container:hover .card-ground-reflection {
+      filter: blur(14px);
+      opacity: 1;
+      transform: scaleX(1.15) translateZ(-20px);
+    }
+
+    /* Filter Wrapper: Provides the neon outer bloom outside the clip-path */
+    .neon-filter-wrap {
+      position: absolute;
+      inset: 0;
+      filter: drop-shadow(0 0 14px var(--neon-glow)) drop-shadow(0 0 28px var(--neon-glow-soft));
+      transition: filter 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    .casino-card-container:hover .neon-filter-wrap {
+      filter: drop-shadow(0 0 20px var(--neon-primary)) drop-shadow(0 0 40px var(--neon-glow));
+    }
+
+    /* 
+      OCTAGONAL CUT-CORNER CLIP-PATH
+      24px corner cut at all 4 angles 
+    */
+    .card-outer-bezel {
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(
+        var(--cut-size) 0%, 
+        calc(100% - var(--cut-size)) 0%, 
+        100% var(--cut-size), 
+        100% calc(100% - var(--cut-size)), 
+        calc(100% - var(--cut-size)) 100%, 
+        var(--cut-size) 100%, 
+        0% calc(100% - var(--cut-size)), 
+        0% var(--cut-size)
+      );
+      /* High-tech gradient border */
+      background: linear-gradient(
+        135deg,
+        var(--neon-accent) 0%,
+        #ffffff 35%,
+        var(--neon-primary) 65%,
+        #050811 100%
+      );
+      padding: 2.5px; /* Bezel border thickness */
+      display: flex;
+    }
+
+    /* Inner Chassis */
+    .card-inner-chassis {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #090d18;
+      clip-path: polygon(
+        var(--cut-inner) 0%, 
+        calc(100% - var(--cut-inner)) 0%, 
+        100% var(--cut-inner), 
+        100% calc(100% - var(--cut-inner)), 
+        calc(100% - var(--cut-inner)) 100%, 
+        var(--cut-inner) 100%, 
+        0% calc(100% - var(--cut-inner)), 
+        0% var(--cut-inner)
+      );
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Secondary Inset Bezel Line */
+    .card-inner-chassis::before {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      clip-path: polygon(
+        19px 0%, calc(100% - 19px) 0%,
+        100% 19px, 100% calc(100% - 19px),
+        calc(100% - 19px) 100%, 19px 100%,
+        0% calc(100% - 19px), 0% 19px
+      );
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Top Accent Neon Tab (Matches Screenshot) */
+    .top-notch-tab {
+      position: absolute;
+      top: 0;
+      left: 33%;
+      right: 33%;
+      height: 4px;
+      background: var(--neon-primary);
+      box-shadow: 0 0 10px var(--neon-primary), 0 0 16px var(--neon-accent);
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      z-index: 15;
+    }
+
+    /* AUTOMATIC IMAGE ADJUSTMENT CONTAINER:
+       Uses object-fit: cover or background-size: cover so any user image fits 100% seamlessly
+    */
+    .card-artwork-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .card-artwork-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 32%;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .casino-card-container:hover .card-artwork-layer img {
+      transform: scale(1.08) translateY(-4px);
+    }
+
+    /* Background Neon Grid Overlay */
+    .card-grid-texture {
+      position: absolute;
+      inset: 0;
+      background-size: 22px 22px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      z-index: 3;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at 50% 35%, black 20%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at 50% 35%, black 20%, transparent 80%);
+    }
+
+    /* Dark Vignette Bottom Gradient for razor-sharp typography readability */
+    .card-vignette {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg, 
+        rgba(5, 8, 17, 0.05) 0%, 
+        rgba(5, 8, 17, 0.15) 40%, 
+        rgba(6, 9, 18, 0.75) 65%, 
+        #050811 92%
+      );
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    /* Specular 3D Hologram Glare (follows mouse cursor) */
+    .card-specular-glare {
+      position: absolute;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(
+        circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.22) 0%,
+        rgba(255, 255, 255, 0.04) 45%,
+        transparent 65%
+      );
+      z-index: 6;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    /* Bottom Content Deck with 3D Pop (TranslateZ) */
+    .card-content-deck {
+      position: relative;
+      z-index: 8;
+      margin-top: auto;
+      padding: 0 16px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: translateZ(28px);
+    }
+
+    /* Bold Metallic Italic Title */
+    .card-title-text {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 1.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 3px;
+      background: linear-gradient(180deg, #ffffff 15%, #c8d8ec 50%, #ffffff 75%, #768ca8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.9));
+    }
+
+    /* Subtitle (e.g. HIGH MULTI, HIGH WIN) */
+    .card-subtitle-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 800;
+      font-size: 0.88rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--sub-color);
+      margin-bottom: 12px;
+      text-shadow: 0 0 10px var(--neon-glow);
+    }
+
+    /* Exact Pill Button ("PLAY NOW >") */
+    .btn-play-neon {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 1.4px;
+      color: #ffffff !important;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.55) 100%), var(--btn-base);
+      border: 1.5px solid var(--btn-border);
+      padding: 6px 26px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      text-decoration: none;
+      box-shadow: 
+        0 0 14px var(--neon-glow),
+        inset 0 1px 3px rgba(255,255,255,0.7),
+        inset 0 -2px 5px rgba(0,0,0,0.5);
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform: translateZ(12px);
+    }
+
+    .btn-play-neon i {
+      font-size: 0.75rem;
+      transition: transform 0.2s ease;
+    }
+
+    .casino-card-container:hover .btn-play-neon {
+      background: var(--neon-primary);
+      border-color: #ffffff;
+      box-shadow: 
+        0 0 24px var(--neon-primary),
+        0 0 35px var(--neon-glow),
+        inset 0 1px 4px #ffffff;
+      transform: translateZ(18px) scale(1.04);
+    }
+
+    .casino-card-container:hover .btn-play-neon i {
+      transform: translateX(3px);
+    }
+
+    /* UI Customizer Panel */
+    .control-panel {
+      background: #0d1222;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .theme-chip {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .theme-chip.active {
+      border-color: #ffffff;
+      box-shadow: 0 0 12px #fff, 0 0 20px currentColor;
+      transform: scale(1.15);
+    }
+
+    .code-export-box {
+      background: #060913;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      max-height: 180px;
+      overflow-y: auto;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header class="py-3 border-bottom border-dark border-opacity-50">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge bg-danger p-2"><i class="fa-solid fa-shapes"></i></span>
+        <h1 class="h5 mb-0 fw-bold font-monospace text-uppercase" style="letter-spacing: 1px;">
+          Cyberpunk Card System <span class="text-secondary fw-normal">| 300 &times; 400</span>
+        </h1>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="resetDefaults()">
+          <i class="fa-solid fa-rotate-left me-1"></i> Reset
+        </button>
+        <button class="btn btn-sm btn-danger rounded-pill px-3 fw-bold" onclick="copyComponentCode()">
+          <i class="fa-solid fa-copy me-1"></i> Copy Code
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Showcase Container -->
+  <main class="container my-4 my-lg-5">
+    <div class="row g-4 align-items-center">
+
+      <!-- LEFT COLUMN: The Interactive 300x400 Card with 3D Tilt -->
+      <div class="col-lg-5 col-xl-6 d-flex flex-column align-items-center justify-content-center">
+        
+        <div class="perspective-stage">
+          <!-- 300x400 EXACT CARD COMPONENT -->
+          <div class="casino-card-container" id="casinoCard" onclick="triggerCardAction()">
+            
+            <!-- Dynamic 3D Neon Base Floor Glow -->
+            <div class="card-ground-reflection"></div>
+
+            <!-- Glow Bezel Envelope -->
+            <div class="neon-filter-wrap">
+              <div class="card-outer-bezel">
+                <div class="card-inner-chassis">
+                  
+                  <!-- Top Neon Tab Detail -->
+                  <div class="top-notch-tab"></div>
+
+                  <!-- Specular Glass Glare -->
+                  <div class="card-specular-glare" id="specularGlare"></div>
+
+                  <!-- Cyberpunk Grid Lines -->
+                  <div class="card-grid-texture"></div>
+
+                  <!-- Automatic Responsive Image Artwork Layer -->
+                  <div class="card-artwork-layer">
+                    <img id="cardImageEl" src="./IMG/avi.png" alt="Game Artwork" onerror="this.src='./IMG/avi.png'">
+                  </div>
+
+                  <!-- Bottom Darkness Vignette -->
+                  <div class="card-vignette"></div>
+
+                  <!-- Content Deck with 3D translateZ depth -->
+                  <div class="card-content-deck">
+                    <div class="card-title-text" id="cardTitleEl">CRASH</div>
+                    <div class="card-subtitle-text" id="cardSubEl">HIGH MULTI, HIGH WIN</div>
+                    <a href="javascript:void(0)" class="btn-play-neon" id="cardBtnEl">
+                      <span id="btnLabelEl">PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <small class="text-secondary mt-2 text-center">
+          <i class="fa-solid fa-hand-pointer me-1"></i> Hover & move mouse to test <strong>Smooth 3D Tilt</strong> & Light Reflection
+        </small>
+      </div>
+
+      <!-- RIGHT COLUMN: Realtime Card Customizer & Code Generator -->
+      <div class="col-lg-7 col-xl-6">
+        <div class="control-panel p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h6 mb-0 text-uppercase fw-bold text-info">
+              <i class="fa-solid fa-sliders me-2"></i>Live Customizer (Auto Fit)
+            </h2>
+            <span class="badge bg-secondary">300 &times; 400 Fixed Spec</span>
+          </div>
+
+          <!-- Color Preset Themes -->
+          <div class="mb-3">
+            <label class="form-label small text-secondary fw-semibold">Color Preset Theme</label>
+            <div class="d-flex gap-2 align-items-center">
+              <div class="theme-chip active" style="background:#ff123d; color:#ff123d;" onclick="setTheme('red', this)" title="Red / Crash / Aviator"></div>
+              <div class="theme-chip" style="background:#0088ff; color:#0088ff;" onclick="setTheme('blue', this)" title="Blue / Goal"></div>
+              <div class="theme-chip" style="background:#9900ff; color:#9900ff;" onclick="setTheme('purple', this)" title="Purple / Dice"></div>
+              <div class="theme-chip" style="background:#d900c4; color:#d900c4;" onclick="setTheme('magenta', this)" title="Magenta / Plinko"></div>
+              <div class="theme-chip" style="background:#00e65b; color:#00e65b;" onclick="setTheme('green', this)" title="Green / Mines"></div>
+              <div class="theme-chip" style="background:#ff9900; color:#ff9900;" onclick="setTheme('gold', this)" title="Gold / Rocket"></div>
+            </div>
+          </div>
+
+          <!-- Image URL & File Upload Input -->
+          <div class="mb-3">
+            <label class="form-label small text-secondary fw-semibold">Card Artwork (Auto-Adjusts & Fits Perfectly)</label>
+            <div class="input-group input-group-sm mb-2">
+              <span class="input-group-text bg-dark border-secondary text-secondary"><i class="fa-solid fa-link"></i></span>
+              <input type="text" class="form-control bg-dark border-secondary text-white" id="imageUrlInput" placeholder="Paste image URL here..." value="https://images.unsplash.com/photo-1517976487507-59897818456a?q=80&w=800&auto=format&fit=crop">
+              <button class="btn btn-outline-info" onclick="applyImageUrl()">Load</button>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <label class="btn btn-sm btn-outline-secondary w-100 py-1" style="cursor: pointer;">
+                <i class="fa-solid fa-upload me-1"></i> Or Upload Image from Device
+                <input type="file" id="fileUploadInput" accept="image/*" style="display:none;" onchange="handleFileUpload(event)">
+              </label>
+            </div>
+          </div>
+
+          <!-- Typography Inputs -->
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label small text-secondary fw-semibold">Card Title</label>
+              <input type="text" class="form-control form-control-sm bg-dark border-secondary text-white fw-bold" id="titleInput" value="CRASH" oninput="updateTypography()">
+            </div>
+            <div class="col-6">
+              <label class="form-label small text-secondary fw-semibold">Button Label</label>
+              <input type="text" class="form-control form-control-sm bg-dark border-secondary text-white" id="btnInput" value="PLAY NOW" oninput="updateTypography()">
+            </div>
+            <div class="col-12">
+              <label class="form-label small text-secondary fw-semibold">Subtitle</label>
+              <input type="text" class="form-control form-control-sm bg-dark border-secondary text-white" id="subInput" value="HIGH MULTI, HIGH WIN" oninput="updateTypography()">
+            </div>
+          </div>
+
+          <!-- Quick Preset Artwork Gallery -->
+          <div class="mb-3">
+            <label class="form-label small text-secondary fw-semibold">Quick Preset Images</label>
+            <div class="d-flex gap-2 flex-wrap">
+              <button class="btn btn-xs btn-outline-secondary text-white py-1 px-2" style="font-size:0.75rem;" onclick="loadPreset('rocket')">🚀 Rocket (Crash)</button>
+              <button class="btn btn-xs btn-outline-secondary text-white py-1 px-2" style="font-size:0.75rem;" onclick="loadPreset('plane')">✈️ Jet (Aviator)</button>
+              <button class="btn btn-xs btn-outline-secondary text-white py-1 px-2" style="font-size:0.75rem;" onclick="loadPreset('dice')">🎲 Neon Dice</button>
+              <button class="btn btn-xs btn-outline-secondary text-white py-1 px-2" style="font-size:0.75rem;" onclick="loadPreset('soccer')">⚽ Soccer Goal</button>
+              <button class="btn btn-xs btn-outline-secondary text-white py-1 px-2" style="font-size:0.75rem;" onclick="loadPreset('mines')">💎 Mines Crystal</button>
+            </div>
+          </div>
+
+          <!-- Code Snippet Output -->
+          <div>
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="small text-secondary fw-semibold">HTML & CSS Snippet:</span>
+              <span class="text-success small" id="copyNotification" style="display: none;"><i class="fa-solid fa-check"></i> Copied!</span>
+            </div>
+            <pre class="code-export-box p-2 mb-0" id="codeSnippetBox"></pre>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Interactive Feedback Toast -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+    <div id="actionToast" class="toast align-items-center text-white bg-dark border border-danger shadow" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2">
+          <i class="fa-solid fa-circle-check text-danger fs-5" id="toastIcon"></i>
+          <div>
+            <strong id="toastTitle">CRASH Selected</strong>
+            <div class="small text-secondary" id="toastMsg">Launching game engine...</div>
+          </div>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Theme Palettes
+    const themes = {
+      red: {
+        primary: '#ff123d',
+        glow: 'rgba(255, 18, 61, 0.75)',
+        glowSoft: 'rgba(255, 18, 61, 0.28)',
+        accent: '#ff4866',
+        sub: '#facc15',
+        btnBase: '#5a0712',
+        btnBorder: '#ff334b'
+      },
+      blue: {
+        primary: '#0088ff',
+        glow: 'rgba(0, 136, 255, 0.75)',
+        glowSoft: 'rgba(0, 136, 255, 0.28)',
+        accent: '#38bdf8',
+        sub: '#93c5fd',
+        btnBase: '#062b5c',
+        btnBorder: '#38bdf8'
+      },
+      purple: {
+        primary: '#9900ff',
+        glow: 'rgba(153, 0, 255, 0.75)',
+        glowSoft: 'rgba(153, 0, 255, 0.28)',
+        accent: '#c084fc',
+        sub: '#d8b4fe',
+        btnBase: '#3b0660',
+        btnBorder: '#c084fc'
+      },
+      magenta: {
+        primary: '#d900c4',
+        glow: 'rgba(217, 0, 196, 0.75)',
+        glowSoft: 'rgba(217, 0, 196, 0.28)',
+        accent: '#f472b6',
+        sub: '#f0abfc',
+        btnBase: '#57054f',
+        btnBorder: '#f472b6'
+      },
+      green: {
+        primary: '#00e65b',
+        glow: 'rgba(0, 230, 91, 0.75)',
+        glowSoft: 'rgba(0, 230, 91, 0.28)',
+        accent: '#4ade80',
+        sub: '#86efac',
+        btnBase: '#054a1d',
+        btnBorder: '#4ade80'
+      },
+      gold: {
+        primary: '#ff9900',
+        glow: 'rgba(255, 153, 0, 0.75)',
+        glowSoft: 'rgba(255, 153, 0, 0.28)',
+        accent: '#fbbf24',
+        sub: '#fde047',
+        btnBase: '#5a2e00',
+        btnBorder: '#fbbf24'
+      }
+    };
+
+    let activeThemeKey = 'red';
+
+    // Elements
+    const cardContainer = document.getElementById('casinoCard');
+    const specularGlare = document.getElementById('specularGlare');
+    const cardImageEl = document.getElementById('cardImageEl');
+    const cardTitleEl = document.getElementById('cardTitleEl');
+    const cardSubEl = document.getElementById('cardSubEl');
+    const cardBtnEl = document.getElementById('cardBtnEl');
+    const btnLabelEl = document.getElementById('btnLabelEl');
+
+    // Controls
+    const imageUrlInput = document.getElementById('imageUrlInput');
+    const titleInput = document.getElementById('titleInput');
+    const subInput = document.getElementById('subInput');
+    const btnInput = document.getElementById('btnInput');
+    const codeSnippetBox = document.getElementById('codeSnippetBox');
+
+    /* -------------------------------------------------------------
+       1. SMOOTH 3D TILT WITH INTERACTIVE SPECULAR GLARE
+       ------------------------------------------------------------- */
+    const maxTilt = 16; // Maximum tilt angle in degrees
+
+    cardContainer.addEventListener('mousemove', (e) => {
+      const rect = cardContainer.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Calculate tilt angles
+      const rotateX = -((y - centerY) / centerY) * maxTilt;
+      const rotateY = ((x - centerX) / centerX) * maxTilt;
+
+      cardContainer.style.transform = `perspective(1100px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.03, 1.03, 1.03)`;
+
+      // Move specular reflection
+      const pctX = (x / rect.width) * 100;
+      const pctY = (y / rect.height) * 100;
+      specularGlare.style.setProperty('--mouse-x', `${pctX}%`);
+      specularGlare.style.setProperty('--mouse-y', `${pctY}%`);
+    });
+
+    cardContainer.addEventListener('mouseleave', () => {
+      // Smoothly return to flat position
+      cardContainer.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    });
+
+    /* Touch support for mobile devices */
+    cardContainer.addEventListener('touchmove', (e) => {
+      if (!e.touches[0]) return;
+      const rect = cardContainer.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const y = e.touches[0].clientY - rect.top;
+      const rotateX = -((y - rect.height/2) / (rect.height/2)) * 12;
+      const rotateY = ((x - rect.width/2) / (rect.width/2)) * 12;
+      cardContainer.style.transform = `perspective(1100px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+    }, { passive: true });
+
+    cardContainer.addEventListener('touchend', () => {
+      cardContainer.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    });
+
+    /* -------------------------------------------------------------
+       2. REALTIME CUSTOMIZATION & IMAGE LOADING
+       ------------------------------------------------------------- */
+    function setTheme(themeKey, chipEl) {
+      activeThemeKey = themeKey;
+      const theme = themes[themeKey];
+      if (!theme) return;
+
+      document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('active'));
+      if (chipEl) chipEl.classList.add('active');
+
+      // Update CSS Variables on root
+      const root = document.documentElement;
+      root.style.setProperty('--neon-primary', theme.primary);
+      root.style.setProperty('--neon-glow', theme.glow);
+      root.style.setProperty('--neon-glow-soft', theme.glowSoft);
+      root.style.setProperty('--neon-accent', theme.accent);
+      root.style.setProperty('--sub-color', theme.sub);
+      root.style.setProperty('--btn-base', theme.btnBase);
+      root.style.setProperty('--btn-border', theme.btnBorder);
+
+      // Toast tone
+      document.getElementById('toastIcon').className = `fa-solid fa-circle-check fs-5`;
+      document.getElementById('toastIcon').style.color = theme.primary;
+
+      updateCodeSnippet();
+    }
+
+    function applyImageUrl() {
+      const url = imageUrlInput.value.trim();
+      if (url) {
+        cardImageEl.src = url;
+      }
+      updateCodeSnippet();
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          cardImageEl.src = e.target.result;
+          imageUrlInput.value = "[User Uploaded Image]";
+          updateCodeSnippet();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function updateTypography() {
+      cardTitleEl.innerText = titleInput.value.trim() || 'GAME';
+      cardSubEl.innerText = subInput.value.trim() || 'PLAY NOW & WIN';
+      btnLabelEl.innerText = btnInput.value.trim() || 'PLAY NOW';
+      updateCodeSnippet();
+    }
+
+    function loadPreset(type) {
+      const presets = {
+        rocket: {
+          title: "CRASH",
+          sub: "HIGH MULTI, HIGH WIN",
+          btn: "PLAY NOW",
+          img: "./IMG/avi.png",
+          theme: "red"
+        },
+        plane: {
+          title: "AVIATOR",
+          sub: "FLY HIGH, CASH OUT!",
+          btn: "PLAY NOW",
+          img: "./IMG/avi.png",
+          theme: "red"
+        },
+        dice: {
+          title: "DICE",
+          sub: "ROLL. WIN. REPEAT.",
+          btn: "ROLL NOW",
+          img: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=800&auto=format&fit=crop",
+          theme: "purple"
+        },
+        soccer: {
+          title: "GOAL",
+          sub: "SCORE BIG EVERY SHOT!",
+          btn: "KICK NOW",
+          img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=800&auto=format&fit=crop",
+          theme: "blue"
+        },
+        mines: {
+          title: "MINES",
+          sub: "CLEAR THE BOARD!",
+          btn: "PLAY NOW",
+          img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop",
+          theme: "green"
+        }
+      };
+
+      const p = presets[type];
+      if (!p) return;
+
+      titleInput.value = p.title;
+      subInput.value = p.sub;
+      btnInput.value = p.btn;
+      imageUrlInput.value = p.img;
+      cardImageEl.src = p.img;
+
+      updateTypography();
+
+      // Find matching theme chip
+      const chips = document.querySelectorAll('.theme-chip');
+      const chipIndex = ['red', 'blue', 'purple', 'magenta', 'green', 'gold'].indexOf(p.theme);
+      setTheme(p.theme, chips[chipIndex]);
+    }
+
+    function resetDefaults() {
+      loadPreset('rocket');
+    }
+
+    /* -------------------------------------------------------------
+       3. CODE SNIPPET GENERATOR & COPY TO CLIPBOARD
+       ------------------------------------------------------------- */
+    function updateCodeSnippet() {
+      const t = themes[activeThemeKey];
+      const title = cardTitleEl.innerText;
+      const sub = cardSubEl.innerText;
+      const btn = btnLabelEl.innerText;
+      const img = cardImageEl.src;
+
+      const code = `<!-- 300x400 CYBERPUNK CARD -->
+<div class="casino-card-container">
+  <div class="card-ground-reflection"></div>
+  <div class="neon-filter-wrap">
+    <div class="card-outer-bezel">
+      <div class="card-inner-chassis">
+        <div class="top-notch-tab"></div>
+        <div class="card-artwork-layer">
+          <img src="${img}" alt="${title}">
+        </div>
+        <div class="card-vignette"></div>
+        <div class="card-content-deck">
+          <div class="card-title-text">${title}</div>
+          <div class="card-subtitle-text">${sub}</div>
+          <a href="#" class="btn-play-neon">
+            ${btn} <i class="fa-solid fa-chevron-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+/* CSS Clip-Path Rule (Exact Octagon): */
+.card-outer-bezel {
+  clip-path: polygon(
+    24px 0%, calc(100% - 24px) 0%, 
+    100% 24px, 100% calc(100% - 24px), 
+    calc(100% - 24px) 100%, 24px 100%, 
+    0% calc(100% - 24px), 0% 24px
+  );
+}`;
+      codeSnippetBox.textContent = code;
+    }
+
+    function copyComponentCode() {
+      const code = codeSnippetBox.textContent;
+      const textarea = document.createElement('textarea');
+      textarea.value = code;
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        const notif = document.getElementById('copyNotification');
+        notif.style.display = 'inline';
+        setTimeout(() => { notif.style.display = 'none'; }, 2000);
+      } catch (err) {
+        console.error('Copy failed', err);
+      }
+      document.body.removeChild(textarea);
+    }
+
+    // Interactive Toast Notification
+    const actionToast = new bootstrap.Toast(document.getElementById('actionToast'), { delay: 2500 });
+    function triggerCardAction() {
+      document.getElementById('toastTitle').innerText = `${cardTitleEl.innerText} Selected`;
+      document.getElementById('toastMsg').innerText = `Bet mode engaged with 300x400 shape.`;
+      actionToast.show();
+    }
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      updateCodeSnippet();
+    });
+  </script>
+</body>
+</html>

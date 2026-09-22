@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WINBET - Registration Portal</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter & Rajdhani for modern gaming UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom Unified Master Stylesheet -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container-fluid px-lg-5 py-3">
+        <!-- Top Controls Bar -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 border-bottom pb-3" style="border-color: rgba(94, 23, 187, 0.4) !important;">
+            <div class="d-flex align-items-center gap-2">
+                <!-- <a href="Register.html" class="brand-logo-wrap text-decoration-none">
+                    <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img logo-sm">
+                </a> -->
+                <span class="badge ms-2 bg-dark text-warning border border-warning-subtle" style="font-size: 0.75rem;">REGISTRATION PORTAL</span>
+            </div>
+
+            <div class="d-flex align-items-center gap-3 mt-2 mt-sm-0">
+                <!-- Mode Switcher -->
+                <div class="mode-toggle-bar">
+                    <button id="btnViewWizard" class="mode-toggle-btn active" onclick="switchView('wizard')">
+                        <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Interactive Flow
+                    </button>
+                    <button id="btnViewShowcase" class="mode-toggle-btn" onclick="switchView('showcase')">
+                        <i class="fa-solid fa-table-columns me-1"></i> 4-Card Reference View
+                    </button>
+                </div>
+
+                <!-- Link to Game Lobby -->
+                <a href="GameLobby.html" class="btn btn-outline-warning btn-sm rounded-pill px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2" style="border-color: #f5b300; color: #ffdc69; text-decoration: none;" title="Open Game Lobby">
+                    <i class="fa-solid fa-gamepad"></i> Game Lobby
+                </a>
+            </div>
+        </div>
+
+        <!-- ==============================================================
+             VIEW 1: INTERACTIVE STEP-BY-STEP REGISTRATION FLOW (MAIN)
+             Screen 1: Registration Form -> Screen 2: Registration Successful
+        =============================================================== -->
+        <div id="wizardContainer" class="row justify-content-center py-2">
+            <div class="col-12 col-md-8 col-lg-5 col-xl-4">
+
+                <!-- MAIN INTERACTIVE CARD -->
+                <div class="winbet-card active-step-card">
+                    <div>
+                        <!-- Logo & Brand Header -->
+                        <!-- <div class="winbet-logo">
+                            <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img">
+                        </div> -->
+
+                        <!-- SCREEN 1: REGISTRATION SETUP -->
+                        <div id="flowScreen1">
+                            <h2 class="card-heading">Machine Registration</h2>
+
+                            <!-- Setup Code Input -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <label class="field-label mb-0" for="liveSignupCode">Setup Code</label>
+                                    <span role="button" class="text-warning small" style="cursor: pointer; font-size: 0.78rem;" onclick="generateRandomCode()">
+                                        <i class="fa-solid fa-shuffle me-1"></i> Generate
+                                    </span>
+                                </div>
+                                <input type="text" id="liveSignupCode" class="winbet-input text-uppercase" value="WB-SHOP-4821" placeholder="WB-SHOP-XXXX">
+                            </div>
+
+                            <!-- Machine Type Selection -->
+                            <div class="mb-3">
+                                <label class="field-label">Machine Type</label>
+                                
+                                <!-- Smart PC Option -->
+                                <div class="option-row selected" id="optSmartPC" onclick="selectMachineType('Smart PC')">
+                                    <div class="option-left">
+                                        <span class="radio-dot" id="dotSmartPC"></span>
+                                        <span>Smart PC</span>
+                                    </div>
+                                    <span class="badge bg-purple-900 border border-purple-500 text-light small px-2 py-1" style="font-size: 0.7rem; background: #1c093a;">
+                                        Cashier Credit
+                                    </span>
+                                </div>
+
+                                <!-- Terminal Option -->
+                                <div class="option-row" id="optTerminal" onclick="selectMachineType('Terminal')">
+                                    <div class="option-left">
+                                        <span class="radio-dot" id="dotTerminal"></span>
+                                        <span>Terminal</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="terminal-tick-badge d-none" id="terminalTickBadge" title="Terminal Selected">
+                                            <i class="fa-solid fa-check"></i>
+                                        </span>
+                                        <span class="badge bg-purple-900 border border-purple-500 text-warning small px-2 py-1" style="font-size: 0.7rem; background: #1c093a;">
+                                            Bill Acceptor
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shop & Location Info -->
+                            <div class="receipt-list mb-3">
+                                <div class="receipt-row">
+                                    <span class="receipt-label"><i class="fa-solid fa-store me-1"></i> Shop Name:</span>
+                                    <span class="receipt-value text-warning">Windhoek Central</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label"><i class="fa-solid fa-location-dot me-1"></i> Location:</span>
+                                    <span class="receipt-value">Independence Ave, Windhoek</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SCREEN 2: REGISTRATION SUCCESSFUL -->
+                        <div id="flowScreen2" class="d-none">
+                            <!-- Glowing Checkmark Circle -->
+                            <div class="success-circle-container mt-2">
+                                <div class="neon-success-circle">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                            </div>
+
+                            <h2 class="success-banner-text">Registration Successful!</h2>
+
+                            <!-- Registration Summary -->
+                            <div class="receipt-list mb-3">
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Machine Name:</span>
+                                    <span class="receipt-value text-warning" id="successMachineName">Smart PC-03</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Machine Type:</span>
+                                    <span class="receipt-value" id="successMachineType">Smart PC</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Shop Name:</span>
+                                    <span class="receipt-value">Windhoek Central</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Location:</span>
+                                    <span class="receipt-value text-secondary">Independence Ave, Windhoek</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Setup Code:</span>
+                                    <span class="receipt-value text-light" id="successSetupCode">WB-SHOP-4821</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons & Footer -->
+                    <div>
+                        <!-- Button on Screen 1 -->
+                        <div id="btnGroupScreen1">
+                            <button type="button" class="btn-winbet" onclick="submitRegistration()">
+                                <i class="fa-solid fa-circle-check me-1"></i> Register Machine
+                            </button>
+                        </div>
+
+                        <!-- Button on Screen 2 -->
+                        <div id="btnGroupScreen2" class="d-none">
+                            <button type="button" class="btn-winbet" onclick="continueToGamingPlatform()">
+                                <span>Continue to Gaming Platform</span>
+                                <i class="fa-solid fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+
+                        <div class="card-footer-brand">
+                            <div class="brand-badge">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <div class="brand-text-block">
+                                <span class="brand-title">WinBet Central</span>
+                                <span class="brand-sub">Independent. Fair. Reliable. Windhoek Central.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==============================================================
+             VIEW 2: EXACT 4-CARD SIDE-BY-SIDE VIEW (MATCHING IMAGE)
+        =============================================================== -->
+        <div id="showcaseContainer" class="row g-4 justify-content-center d-none">
+            
+            <!-- CARD 1: Registration Code -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="winbet-card">
+                    <div>
+                        <div class="text-center">
+                            <span class="badge-step">CARD 1 / 4</span>
+                        </div>
+                        <!-- <div class="winbet-logo">
+                            <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img">
+                        </div> -->
+                        <h2 class="card-heading">Registration</h2>
+
+                        <div class="mt-4 mb-4">
+                            <label class="field-label" for="codeShowcase">Setup Code</label>
+                            <input type="text" id="codeShowcase" class="winbet-input" value="WB-SHOP-4821" readonly>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn-winbet" onclick="switchView('wizard')">
+                            Next
+                        </button>
+
+                        <div class="card-footer-brand">
+                            <div class="brand-badge">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <div class="brand-text-block">
+                                <span class="brand-title">WinBet Central</span>
+                                <span class="brand-sub">Independent. Fair. Reliable.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 2: Machine Type Selection -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="winbet-card">
+                    <div>
+                        <div class="text-center">
+                            <span class="badge-step">CARD 2 / 4</span>
+                        </div>
+                        <!-- <div class="winbet-logo">
+                            <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img">
+                        </div> -->
+                        <h2 class="card-heading">Machine Type</h2>
+
+                        <div class="mt-3 mb-3">
+                            <label class="field-label">Setup Code</label>
+                            
+                            <!-- Option 1: Smart PC -->
+                            <div class="option-row">
+                                <div class="option-left">
+                                    <span class="radio-dot"></span>
+                                    <span>Smart PC</span>
+                                </div>
+                            </div>
+
+                            <!-- Option 2: Terminal (Gold Ring) -->
+                            <div class="option-row selected">
+                                <div class="option-left">
+                                    <span class="radio-dot gold-ring"></span>
+                                    <span>Terminal</span>
+                                </div>
+                                <i class="fa-solid fa-check text-success fs-6"></i>
+                            </div>
+
+                            <!-- Option 3: Super Game -->
+                            <div class="option-row">
+                                <div class="option-left">
+                                    <span class="radio-dot gold-ring-filled"></span>
+                                    <span>Super Game</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-down dropdown-chevron"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn-winbet" onclick="selectMachineType('Terminal'); switchView('wizard');">
+                            Register
+                        </button>
+
+                        <div class="card-footer-brand">
+                            <div class="brand-badge">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <div class="brand-text-block">
+                                <span class="brand-title">WinBet Central</span>
+                                <span class="brand-sub">Independent. Fair. Reliable.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 3: Register Confirmation / Machine Spec -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="winbet-card">
+                    <div>
+                        <div class="text-center">
+                            <span class="badge-step">CARD 3 / 4</span>
+                        </div>
+                        <!-- <div class="winbet-logo">
+                            <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img">
+                        </div> -->
+                        <h2 class="card-heading">Register</h2>
+
+                        <div class="mt-3 mb-3">
+                            <label class="field-label">Signup Type</label>
+                            
+                            <!-- Option 1: Smart PC -->
+                            <div class="option-row">
+                                <div class="option-left">
+                                    <span class="radio-dot"></span>
+                                    <span>Smart PC</span>
+                                </div>
+                            </div>
+
+                            <!-- Option 2: Terminal -->
+                            <div class="option-row selected">
+                                <div class="option-left">
+                                    <span class="radio-dot gold-ring"></span>
+                                    <span>Terminal</span>
+                                </div>
+                                <i class="fa-solid fa-check text-success"></i>
+                            </div>
+
+                            <!-- Option 3: Status Row -->
+                            <div class="option-row">
+                                <div class="option-left">
+                                    <span class="radio-dot"></span>
+                                    <span>Success</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-1 text-primary-emphasis">
+                                    <i class="fa-solid fa-rotate text-info fs-6"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn-winbet" onclick="switchView('wizard')">
+                            Register
+                        </button>
+
+                        <div class="card-footer-brand">
+                            <div class="brand-badge">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <div class="brand-text-block">
+                                <span class="brand-title">WinBet Central</span>
+                                <span class="brand-sub">Independent. Fair. Reliable.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 4: Registration Successful Confirmation -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="winbet-card">
+                    <div>
+                        <div class="text-center">
+                            <span class="badge-step">CARD 4 / 4</span>
+                        </div>
+                        <!-- <div class="winbet-logo">
+                            <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img">
+                        </div> -->
+
+                        <!-- Neon Checkmark Badge -->
+                        <div class="success-circle-container mt-2">
+                            <div class="neon-success-circle">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                        </div>
+
+                        <h2 class="success-banner-text">Registration Successful!</h2>
+
+                        <!-- Summary Meta List matching the screenshot -->
+                        <div class="receipt-list">
+                            <div class="receipt-row">
+                                <span class="receipt-label">Machine:</span>
+                                <span class="receipt-value" id="dispMachine">Smart PC-03</span>
+                            </div>
+                            <div class="receipt-row">
+                                <span class="receipt-label">Terminal:</span>
+                                <span class="receipt-value" id="dispTerminal">Smart-PC</span>
+                            </div>
+                            <div class="receipt-row">
+                                <span class="receipt-label">Shop:</span>
+                                <span class="receipt-value">Windhoek Central</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn-winbet" onclick="continueToGamingPlatform()">
+                            <span>Continue to Gaming Platform</span>
+                            <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </button>
+
+                        <div class="card-footer-brand">
+                            <div class="brand-badge">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <div class="brand-text-block">
+                                <span class="brand-title">WinBet Central</span>
+                                <span class="brand-sub">Independent. Fair. Reliable. Windhoek Central.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast Element -->
+    <div id="customToast">
+        <i class="fa-solid fa-circle-check text-success fs-5"></i>
+        <span id="toastMessage">Action completed!</span>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // State
+        const regState = {
+            setupCode: 'WB-SHOP-4821',
+            machineType: 'Smart PC',
+            machineName: 'Smart PC-03',
+            shopName: 'Windhoek Central',
+            currentScreen: 1
+        };
+
+        // Initialize Selection
+        function selectMachineType(typeName) {
+            regState.machineType = typeName;
+            regState.machineName = (typeName === 'Terminal') ? 'Terminal-02' : 'Smart PC-03';
+
+            const optSmartPC = document.getElementById('optSmartPC');
+            const optTerminal = document.getElementById('optTerminal');
+            const dotSmartPC = document.getElementById('dotSmartPC');
+            const dotTerminal = document.getElementById('dotTerminal');
+            const terminalTick = document.getElementById('terminalTickBadge');
+
+            if (typeName === 'Smart PC') {
+                optSmartPC.classList.add('selected');
+                optTerminal.classList.remove('selected');
+                dotSmartPC.className = 'radio-dot gold-ring-filled';
+                dotTerminal.className = 'radio-dot';
+                terminalTick.classList.add('d-none');
+            } else {
+                optTerminal.classList.add('selected');
+                optSmartPC.classList.remove('selected');
+                dotTerminal.className = 'radio-dot gold-ring-filled';
+                dotSmartPC.className = 'radio-dot';
+                terminalTick.classList.remove('d-none'); // Confirmation tick when Terminal is selected
+            }
+
+            showToast(`Selected: ${typeName} (${regState.machineName})`);
+        }
+
+        // Submit Registration (Screen 1 -> Screen 2)
+        function submitRegistration() {
+            const inputCode = document.getElementById('liveSignupCode').value.trim();
+            if (!inputCode) {
+                showToast('Please enter a valid Setup Code!');
+                return;
+            }
+            regState.setupCode = inputCode;
+
+            // Populate Screen 2 Data
+            document.getElementById('successMachineName').innerText = regState.machineName;
+            document.getElementById('successMachineType').innerText = regState.machineType;
+            document.getElementById('successSetupCode').innerText = regState.setupCode;
+
+            // Switch to Screen 2
+            document.getElementById('flowScreen1').classList.add('d-none');
+            document.getElementById('btnGroupScreen1').classList.add('d-none');
+
+            document.getElementById('flowScreen2').classList.remove('d-none');
+            document.getElementById('btnGroupScreen2').classList.remove('d-none');
+
+            // Save to localStorage for lobby
+            localStorage.setItem('winbet_machine_type', regState.machineType.toLowerCase().replace(' ', ''));
+            localStorage.setItem('winbet_machine_name', regState.machineName);
+            localStorage.setItem('winbet_shop_name', regState.shopName);
+
+            showToast(`Registration Successful for ${regState.machineName}!`);
+        }
+
+        // Continue to Gaming Platform
+        function continueToGamingPlatform() {
+            const modeParam = (regState.machineType === 'Terminal') ? 'terminal' : 'smartpc';
+            window.location.href = `GameLobby.html?mode=${modeParam}`;
+        }
+
+        // View Switcher (Wizard vs 4-Card Showcase)
+        function switchView(viewName) {
+            const wizard = document.getElementById('wizardContainer');
+            const showcase = document.getElementById('showcaseContainer');
+            const btnWiz = document.getElementById('btnViewWizard');
+            const btnShow = document.getElementById('btnViewShowcase');
+
+            if (viewName === 'wizard') {
+                wizard.classList.remove('d-none');
+                showcase.classList.add('d-none');
+                btnWiz.classList.add('active');
+                btnShow.classList.remove('active');
+            } else {
+                wizard.classList.add('d-none');
+                showcase.classList.remove('d-none');
+                btnShow.classList.add('active');
+                btnWiz.classList.remove('active');
+            }
+        }
+
+        // Generate Random Registration Setup Code
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let part1 = '';
+            let part2 = '';
+            for (let i = 0; i < 4; i++) part1 += chars.charAt(Math.floor(Math.random() * chars.length));
+            for (let i = 0; i < 4; i++) part2 += Math.floor(Math.random() * 10);
+            
+            const newCode = `WB-${part1}-${part2}`;
+            document.getElementById('liveSignupCode').value = newCode;
+            document.getElementById('codeShowcase').value = newCode;
+            regState.setupCode = newCode;
+            showToast(`Generated: ${newCode}`);
+        }
+
+        // Toast Notification Handler
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('customToast');
+            const text = document.getElementById('toastMessage');
+            text.innerText = message;
+            toast.classList.add('show');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2800);
+        }
+
+        // Set default selection on load
+        window.addEventListener('DOMContentLoaded', () => {
+            selectMachineType('Smart PC');
+        });
+    </script>
+</body>
+</html>

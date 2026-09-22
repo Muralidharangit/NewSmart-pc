@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular Games - SMARTPC Premier Showcase</title>
+    <!-- Google Fonts: Orbitron & Rajdhani for authentic cyber sci-fi esports typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6.5 Pro icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-deep-space: #070913;
+            --bg-cockpit: #0c0f1d;
+            --bg-card: #0a0d1a;
+            --border-card-subtle: rgba(255, 255, 255, 0.08);
+            --cyan-glow: #00f0ff;
+            --magenta-glow: #ff007f;
+            --neon-purple: #d946ef;
+            --neon-blue: #00f0ff;
+            --neon-pink: #ec4899;
+            --neon-green: #10b981;
+            --neon-teal: #06b6d4;
+            --neon-amber: #f59e0b;
+            --neon-violet: #8b5cf6;
+            --neon-sapphire: #3b82f6;
+            --gold-accent: #ffd700;
+            --font-display: 'Orbitron', -apple-system, sans-serif;
+            --font-sub: 'Rajdhani', sans-serif;
+            --cut-size: 16px;
+            --cut-inner: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-deep-space);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 15%, rgba(192, 38, 211, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 50% 80%, rgba(2, 132, 199, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #05070e 0%, #080c18 100%);
+            color: #ffffff;
+            font-family: var(--font-sub);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 24px 14px;
+        }
+
+        /* Container Main Frame */
+        .showcase-wrapper {
+            max-width: 1460px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            padding: 22px 26px;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(139, 92, 246, 0.4);
+            border-radius: 24px;
+            box-shadow: 
+                0 0 50px rgba(0, 0, 0, 0.9),
+                0 0 35px rgba(139, 92, 246, 0.15),
+                inset 0 0 40px rgba(139, 92, 246, 0.08);
+            overflow: hidden;
+        }
+
+        .showcase-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 12%;
+            right: 12%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ec4899 20%, #a855f7 50%, #00f0ff 80%, transparent);
+            box-shadow: 0 0 20px #a855f7, 0 0 35px #00f0ff;
+        }
+
+        /* Section Header */
+        .top-games-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 4px 18px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        .top-games-header-bar::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 280px;
+            height: 2px;
+            background: linear-gradient(90deg, #ff0055, #00f0ff, transparent);
+            box-shadow: 0 0 10px #00f0ff;
+        }
+
+        .top-games-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-fire-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255, 45, 85, 0.3), rgba(255, 115, 0, 0.25));
+            border: 1px solid rgba(255, 75, 43, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #ff453a;
+            box-shadow: 0 0 20px rgba(255, 69, 58, 0.6), inset 0 0 10px rgba(255, 100, 0, 0.4);
+            animation: pulse-fire 2s infinite ease-in-out;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-fire {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.08); filter: brightness(1.3); }
+        }
+
+        .top-games-title-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-games-title {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #ffffff 15%, #e2e8f0 45%, #93c5fd 75%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(56, 189, 248, 0.5));
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .top-games-subtitle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #00e5ff;
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+        }
+
+        .sub-line {
+            width: 32px;
+            height: 1.5px;
+            background: linear-gradient(90deg, #00f0ff, transparent);
+            position: relative;
+        }
+        .sub-line:first-child {
+            background: linear-gradient(270deg, #00f0ff, transparent);
+        }
+
+        .btn-top-view-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 24px;
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #ffffff !important;
+            text-decoration: none;
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(88, 28, 135, 0.6));
+            border: 1px solid rgba(192, 38, 211, 0.7);
+            border-radius: 999px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 0 15px rgba(192, 38, 211, 0.3), inset 0 0 10px rgba(192, 38, 211, 0.2);
+        }
+
+        .btn-top-view-all:hover {
+            color: #fff !important;
+            background: linear-gradient(135deg, rgba(88, 28, 135, 0.95), rgba(192, 38, 211, 0.8));
+            border-color: #f0abfc;
+            box-shadow: 0 0 25px rgba(240, 171, 252, 0.6), inset 0 0 15px rgba(240, 171, 252, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* 2-Column Showcase Layout: Left Hero + Right 4x2 Matrix */
+        .top-games-showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 1024px) {
+            .top-games-showcase-grid {
+                grid-template-columns: 29.5% 1fr;
+                gap: 18px;
+                align-items: stretch;
+            }
+        }
+
+        /* --- OCTAGONAL CHAMFERED CASINO CARD SHAPE (FROM LOBBY THEME) --- */
+        .casino-card-chamfer-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            user-select: none;
+            transform-style: preserve-3d;
+            transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.25s ease;
+            filter: drop-shadow(0 0 14px var(--card-glow, rgba(217, 70, 239, 0.4)));
+        }
+
+        .casino-card-chamfer-wrap:hover {
+            transform: translateY(-6px) scale(1.02);
+            filter: drop-shadow(0 0 24px var(--card-glow, rgba(217, 70, 239, 0.8))) drop-shadow(0 0 35px var(--card-border, #d946ef));
+        }
+
+        /* Octagonal Bezel with diagonal 45° cuts */
+        .card-octagonal-bezel {
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(
+                var(--cut-size) 0%, 
+                calc(100% - var(--cut-size)) 0%, 
+                100% var(--cut-size), 
+                100% calc(100% - var(--cut-size)), 
+                calc(100% - var(--cut-size)) 100%, 
+                var(--cut-size) 100%, 
+                0% calc(100% - var(--cut-size)), 
+                0% var(--cut-size)
+            );
+            background: linear-gradient(
+                135deg,
+                var(--card-sub, #ffffff) 0%,
+                var(--card-border, #d946ef) 40%,
+                var(--card-border, #d946ef) 70%,
+                #060914 100%
+            );
+            padding: 2.5px;
+            display: flex;
+        }
+
+        /* Inner Chassis with diagonal 45° cuts */
+        .card-octagonal-chassis {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 30%, #150d2c 0%, #060312 92%);
+            clip-path: polygon(
+                var(--cut-inner) 0%, 
+                calc(100% - var(--cut-inner)) 0%, 
+                100% var(--cut-inner), 
+                100% calc(100% - var(--cut-inner)), 
+                calc(100% - var(--cut-inner)) 100%, 
+                var(--cut-inner) 100%, 
+                0% calc(100% - var(--cut-inner)), 
+                0% var(--cut-inner)
+            );
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-octagonal-chassis::before {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            clip-path: polygon(
+                12px 0%, calc(100% - 12px) 0%,
+                100% 12px, 100% calc(100% - 12px),
+                calc(100% - 12px) 100%, 12px 100%,
+                0% calc(100% - 12px), 0% 12px
+            );
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            pointer-events: none;
+            z-index: 9;
+        }
+
+        /* Top Center Glowing Notch Tab */
+        .top-notch-tab {
+            position: absolute;
+            top: 0;
+            left: 28%;
+            right: 28%;
+            height: 3.5px;
+            background: var(--card-border, #d946ef);
+            box-shadow: 0 0 10px var(--card-border, #d946ef), 0 0 16px var(--card-glow, rgba(217, 70, 239, 0.8));
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            z-index: 15;
+        }
+
+        /* Top-Right Glowing HOT Badge Pill */
+        .card-floating-badge {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            z-index: 12;
+            font-family: var(--font-display);
+            font-size: 0.68rem;
+            font-weight: 900;
+            letter-spacing: 0.6px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: linear-gradient(135deg, #ff4500 0%, #ff7700 100%);
+            color: #ffffff;
+            box-shadow: 0 0 14px rgba(255, 69, 0, 0.85);
+        }
+
+        .card-floating-badge.badge-live {
+            background: #dc2626;
+            box-shadow: 0 0 14px rgba(220, 38, 38, 0.9);
+            animation: pulse-live 1.5s infinite;
+        }
+
+        .card-floating-badge.badge-vip {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            box-shadow: 0 0 14px rgba(139, 92, 246, 0.85);
+        }
+
+        .card-floating-badge.badge-top {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            box-shadow: 0 0 14px rgba(2, 132, 199, 0.85);
+        }
+
+        @keyframes pulse-live {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.05); }
+        }
+
+        /* Left Hero Card Outer Stage */
+        .hero-card-stage {
+            width: 100%;
+            height: 100%;
+            min-height: 540px;
+            display: flex;
+            --cut-size: 22px;
+            --cut-inner: 20px;
+        }
+
+        .hero-badges-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            position: relative;
+            z-index: 12;
+        }
+
+        .hero-badge-hot {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            font-family: var(--font-sub);
+            font-size: 0.8rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #fff;
+            box-shadow: 0 0 16px rgba(239, 68, 68, 0.9);
+        }
+
+        .hero-badge-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: rgba(4, 30, 50, 0.85);
+            border: 1.5px solid #00f0ff;
+            font-family: var(--font-sub);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #e0f2fe;
+            box-shadow: 0 0 14px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Real Image Artwork Layer */
+        .card-artwork-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .card-artwork-layer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+            transition: transform 0.45s ease;
+        }
+
+        .casino-card-chamfer-wrap:hover .card-artwork-layer img {
+            transform: scale(1.1) translateY(-4px);
+        }
+
+        /* Clean Dark Vignette Overlay */
+        .card-vignette {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 35%, rgba(6, 2, 18, 0.65) 65%, rgba(5, 2, 16, 0.96) 94%);
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        /* Mouse-tracking Specular Glare (Lobby Style) */
+        .card-specular-glare {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle 220px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.25), transparent 70%);
+            pointer-events: none;
+            z-index: 8;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .casino-card-chamfer-wrap:hover .card-specular-glare {
+            opacity: 1;
+        }
+
+        /* Hero Content Deck */
+        .hero-content-deck {
+            position: relative;
+            z-index: 10;
+            margin-top: auto;
+            padding: 0 16px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-title-text {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-style: italic;
+            font-size: clamp(1.6rem, 2vw, 2.3rem);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .title-rocket {
+            background: linear-gradient(180deg, #fff7c2 0%, #f59e0b 45%, #ea580c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.7));
+        }
+
+        .title-crash {
+            background: linear-gradient(180deg, #ffffff 0%, #38bdf8 45%, #0284c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(0, 240, 255, 0.8));
+        }
+
+        .hero-stats-row {
+            font-family: var(--font-sub);
+            font-weight: 800;
+            font-size: 0.88rem;
+            letter-spacing: 1.2px;
+            color: #38bdf8;
+            margin-bottom: 4px;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .stat-players {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-dot {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .stat-crown {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.7);
+        }
+
+        .hero-tagline-text {
+            font-family: var(--font-sub);
+            font-weight: 700;
+            font-size: 0.74rem;
+            letter-spacing: 2px;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            white-space: nowrap;
+        }
+
+        .btn-hero-launch {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 0.88rem;
+            letter-spacing: 1.8px;
+            color: #ffffff !important;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #d946ef 0%, #a855f7 50%, #06b6d4 100%);
+            border: 2px solid #ffffff;
+            padding: 10px 22px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 0 25px rgba(217, 70, 239, 0.7), inset 0 1px 4px #ffffff;
+            transition: all 0.25s ease;
+            width: 90%;
+            white-space: nowrap;
+        }
+
+        .hero-card-stage:hover .btn-hero-launch {
+            transform: scale(1.04);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.9), 0 0 45px rgba(217, 70, 239, 0.9), inset 0 1px 5px #ffffff;
+        }
+
+        /* --- RIGHT 2x4 CATEGORY MATRIX (OCTAGONAL CARDS) --- */
+        .top-games-matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        @media (min-width: 768px) {
+            .top-games-matrix {
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 16px;
+            }
+        }
+
+        .matrix-game-card {
+            position: relative;
+            height: 260px;
+        }
+
+        /* Matrix Card Content Deck */
+        .matrix-content-deck {
+            position: relative;
+            z-index: 10;
+            margin-top: auto;
+            padding: 0 10px 14px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .matrix-title-text {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-style: italic;
+            font-size: 1.05rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            line-height: 1.15;
+            margin-bottom: 2px;
+            color: #ffffff;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+            white-space: nowrap;
+        }
+
+        .matrix-player-text {
+            font-family: var(--font-sub);
+            font-weight: 800;
+            font-size: 0.76rem;
+            letter-spacing: 0.8px;
+            color: var(--card-sub, #38bdf8);
+            margin-bottom: 2px;
+            text-shadow: 0 0 8px var(--card-glow);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .matrix-tagline-text {
+            font-family: var(--font-sub);
+            font-weight: 700;
+            font-size: 0.68rem;
+            letter-spacing: 1.2px;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            white-space: nowrap;
+        }
+
+        /* Lobby Card Pill Action Button */
+        .btn-card-action {
+            background: linear-gradient(180deg, #1a0f2e 0%, #2a0e44 100%);
+            border: 1.5px solid var(--card-border, #d946ef);
+            border-radius: 999px;
+            color: #ffffff !important;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 0.74rem;
+            letter-spacing: 1px;
+            padding: 6px 16px;
+            box-shadow: 0 0 12px var(--card-glow, rgba(217, 70, 239, 0.5));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            width: 86%;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .matrix-game-card:hover .btn-card-action {
+            background: var(--card-border, #d946ef);
+            color: #000000 !important;
+            box-shadow: 0 0 20px var(--card-border, #d946ef);
+            transform: scale(1.04);
+        }
+
+        .btn-card-action i {
+            font-size: 0.68rem;
+            transition: transform 0.2s ease;
+        }
+
+        .matrix-game-card:hover .btn-card-action i {
+            transform: translateX(3px);
+        }
+
+        /* --- BOTTOM TRUST FEATURES BAR --- */
+        .top-games-trust-bar {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 12px;
+            padding: 14px 22px;
+            background: linear-gradient(90deg, rgba(15, 6, 36, 0.95) 0%, rgba(8, 3, 20, 0.98) 50%, rgba(15, 6, 36, 0.95) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(168, 85, 247, 0.1);
+            overflow: hidden;
+        }
+
+        .trust-bar-decor-left,
+        .trust-bar-decor-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .cyber-slash {
+            width: 6px;
+            height: 24px;
+            background: linear-gradient(180deg, #d946ef 0%, #a855f7 100%);
+            transform: skewX(-25deg);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(217, 70, 239, 0.8);
+            opacity: 0.85;
+        }
+
+        .trust-bar-decor-right .cyber-slash {
+            background: linear-gradient(180deg, #a855f7 0%, #06b6d4 100%);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.8);
+        }
+
+        .trust-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1 1 auto;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+        .trust-feature-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .trust-feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1.5px solid rgba(168, 85, 247, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #c084fc;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+            flex-shrink: 0;
+        }
+
+        .trust-feature-icon.icon-shield { color: #38bdf8; border-color: rgba(56, 189, 248, 0.6); box-shadow: 0 0 14px rgba(56, 189, 248, 0.5); }
+        .trust-feature-icon.icon-deposit { color: #facc15; border-color: rgba(250, 204, 21, 0.6); box-shadow: 0 0 14px rgba(250, 204, 21, 0.5); }
+        .trust-feature-icon.icon-jackpot { color: #ec4899; border-color: rgba(236, 72, 153, 0.6); box-shadow: 0 0 14px rgba(236, 72, 153, 0.5); }
+        .trust-feature-icon.icon-support { color: #4ade80; border-color: rgba(74, 222, 128, 0.6); box-shadow: 0 0 14px rgba(74, 222, 128, 0.5); }
+
+        .trust-feature-text .trust-feature-title {
+            font-family: var(--font-sub);
+            font-weight: 900;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-transform: uppercase;
+            line-height: 1.15;
+            white-space: nowrap;
+        }
+
+        .trust-feature-text .trust-feature-sub {
+            font-family: var(--font-sub);
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 0.8px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            line-height: 1.15;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 992px) {
+            .top-games-trust-bar {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            .trust-bar-decor-left,
+            .trust-bar-decor-right {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .top-games-trust-bar {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Showcase Wrapper -->
+    <div class="showcase-wrapper">
+
+        <!-- ==============================================================
+             PREMIER SHOWCASE: TOP GAMES & CATEGORY MATRIX
+             ============================================================== -->
+        <section class="top-games-showcase-section">
+            
+            <!-- Section Header -->
+            <div class="top-games-header-bar">
+                <div class="top-games-header-left">
+                    <div class="header-fire-badge">
+                        <i class="fa-solid fa-fire-flame-curved"></i>
+                    </div>
+                    <div class="top-games-title-wrap">
+                        <h2 class="top-games-title">POPULAR GAMES</h2>
+                        <div class="top-games-subtitle">
+                            <span class="sub-line"></span>
+                            <span>PLAY • WIN • ENJOY</span>
+                            <span class="sub-line"></span>
+                        </div>
+                    </div>
+                </div>
+                <a href="javascript:void(0)" class="btn-top-view-all" onclick="showCyberToast('Browsing All 500+ Games in Lobby...')">
+                    <span>VIEW ALL</span> <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+
+            <!-- Main Showcase Grid: Left Hero Card (Rocket Crash) + Right 2x4 Category Matrix -->
+            <div class="top-games-showcase-grid">
+                
+                <!-- LEFT HERO CARD: ROCKET CRASH (TALL 2-ROW SPAN) -->
+                <div class="hero-card-stage casino-card-chamfer-wrap" style="--card-border: #00f0ff; --card-glow: rgba(0, 240, 255, 0.5); --card-sub: #ec4899;" onclick="launchGameTheater('Rocket Crash', '5000X Max Multiplier', './IMG/6.png')">
+                    <div class="card-octagonal-bezel">
+                        <div class="card-octagonal-chassis">
+                            
+                            <!-- Top Notch Tab Highlight -->
+                            <div class="top-notch-tab" style="background: #00f0ff; box-shadow: 0 0 12px #00f0ff;"></div>
+
+                            <!-- Badges Header -->
+                            <div class="hero-badges-header">
+                                <span class="hero-badge-hot"><i class="fa-solid fa-fire"></i> HOT</span>
+                                <span class="hero-badge-count"><i class="fa-solid fa-users"></i> 5000K+ PLAYERS</span>
+                            </div>
+
+                            <!-- Cyber Glare Overlay -->
+                            <div class="card-specular-glare"></div>
+
+                            <!-- Real Image Layer for Rocket Crash -->
+                            <div class="card-artwork-layer">
+                                <img src="./IMG/6.png" alt="Rocket Crash" loading="lazy" onerror="this.src='./IMG/6.png'">
+                            </div>
+
+                            <!-- Dark Vignette Overlay -->
+                            <div class="card-vignette"></div>
+
+                            <!-- Bottom Deck -->
+                            <div class="hero-content-deck">
+                                <div class="hero-title-text">
+                                    <span class="title-rocket">ROCKET</span><span class="title-crash">CRASH</span>
+                                </div>
+                                <div class="hero-stats-row">
+                                    <span class="stat-players"><i class="fa-solid fa-atom"></i> 254.3K PLAYERS</span>
+                                    <span class="stat-dot">•</span>
+                                    <span class="stat-crown"><i class="fa-solid fa-crown"></i> 5000X</span>
+                                </div>
+                                <div class="hero-tagline-text">HIGHER • FASTER • BIGGER WINS</div>
+                                <a href="javascript:void(0)" class="btn-hero-launch">
+                                    <i class="fa-solid fa-rocket"></i> <span>LAUNCH GAME</span> <i class="fa-solid fa-chevron-right"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT 2x4 CATEGORY MATRIX (8 OCTAGONAL CARDS WITH REAL IMAGES) -->
+                <div class="top-games-matrix">
+                    
+                    <!-- 1. PLINKO VIP / SLOTS -->
+                    <div class="matrix-game-card casino-card-chamfer-wrap" style="--card-border: #d946ef; --card-glow: rgba(217, 70, 239, 0.65); --card-sub: #f0abfc;" onclick="launchGameTheater('Plinko VIP', '1,000X Multiplier', './IMG/3.png')">
+                        <div class="card-octagonal-bezel">
+                            <div class="card-octagonal-chassis">
+                                <div class="top-notch-tab"></div>
+                                <div class="card-floating-badge"><i class="fa-solid fa-bullseye"></i> HOT</div>
+                                <div class="card-specular-glare"></div>
+                                
+                                <div class="card-artwork-layer">
+                                    <img src="./IMG/3.png" alt="Plinko VIP" loading="lazy" onerror="this.src='./IMG/3.png'">
+                                </div>
+
+                                <div class="card-vignette"></div>
+                                <div class="matrix-content-deck">
+                                    <div class="matrix-title-text" style="color: #f0abfc;">PLINKO VIP</div>
+                                    <div class="matrix-player-text"><i class="fa-solid fa-users"></i> 623.7K PLAYERS</div>
+                                    <div class="matrix-tagline-text">DROP BALL • 1,000X MULTI</div>
+                                    <a href="javascript:void(0)" class="btn-card-action"><span>DROP NOW</span> <i class="fa-solid fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. TABLE GAMES -->
+                    <div class="matrix-game-card casino-card-chamfer-wrap" style="--card-border: #00f0ff; --card-glow: rgba(0, 240, 255, 0.65); --card-sub: #7dd3fc;" onclick="launchGameTheater('Table Games', '198.4K Active Players', './IMG/2.png')">
+                        <div class="card-octagonal-bezel">
+                            <div class="card-octagonal-chassis">
+                                <div class="top-notch-tab"></div>
+                                <div class="card-floating-badge badge-top"><i class="fa-solid fa-star"></i> TOP</div>
+                                <div class="card-specular-glare"></div>
+                                
+                                <div class="card-artwork-layer">
+                                    <img src="./IMG/2.png" alt="Table Games" loading="lazy" onerror="this.src='./IMG/2.png'">
+                                </div>
+
+                                <div class="card-vignette"></div>
+                                <div class="matrix-content-deck">
+                                    <div class="matrix-title-text" style="color: #7dd3fc;">TABLE GAMES</div>
+                                    <div class="matrix-player-text"><i class="fa-solid fa-users"></i> 198.4K PLAYERS</div>
+                                    <div class="matrix-tagline-text">CLASSIC • STRATEGY • SKILL</div>
+                                    <a href="javascript:void(0)" class="btn-card-action"><span>PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. LIVE CASINO -->
+                    <div class="matrix-game-card casino-card-chamfer-wrap" style="--card-border: #ec4899; --card-glow: rgba(236, 72, 153, 0.65); --card-sub: #f472b6;" onclick="launchGameTheater('Live Casino', '412.6K Active Players', './IMG/avi.png')">
+                        <div class="card-octagonal-bezel">
+                            <div class="card-octagonal-chassis">
+                                <div class="top-notch-tab"></div>
+                                <div class="card-floating-badge badge-live"><i class="fa-solid fa-circle"></i> LIVE</div>
+                                <div class="card-specular-glare"></div>
+                                
+                                <div class="card-artwork-layer">
+                                    <img src="./IMG/avi.png" alt="Live Casino" loading="lazy" onerror="this.src='./IMG/avi.png'">
+                                </div>
+
+                                <div class="card-vignette"></div>
+                                <div class="matrix-content-deck">
+                                    <div class="matrix-title-text" style="color: #f472b6;">LIVE CASINO</div>
+                                    <div class="matrix-player-text"><i class="fa-solid fa-users"></i> 412.6K PLAYERS</div>
+                                    <div class="matrix-tagline-text">REAL DEALERS • REAL ACTION</div>
+                                    <a href="javascript:void(0)" class="btn-card-action"><span>JOIN NOW</span> <i class="fa-solid fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. SPORTS PRO -->
+                    <div class="matrix-game-card casino-card-chamfer-wrap" style="--card-border: #10b981; --card-glow: rgba(16, 185, 129, 0.65); --card-sub: #86efac;" onclick="launchGameTheater('Sports Pro', '376.8K Active Players', './IMG/5.png')">
+                        <div class="card-octagonal-bezel">
+                            <div class="card-octagonal-chassis">
+                                <div class="top-notch-tab"></div>
+                                <div class="card-floating-badge"><i class="fa-solid fa-fire"></i> HOT</div>
+                                <div class="card-specular-glare"></div>
+                                
+                                <div class="card-artwork-layer">
+                                    <img src="./IMG/5.png" alt="Sports Pro" loading="lazy" onerror="this.src='./IMG/5.png'">
+                                </div>
+
+                                <div class="card-vignette"></div>
+                                <div class="matrix-content-deck">
+                                    <div class="matrix-title-text" style="color: #86efac;">SPORTS PRO</div>
+                                    <div class="matrix-player-text"><i class="fa-solid fa-users"></i> 376.8K PLAYERS</div>
+                                    <div class="matrix-tagline-text">BET • WATCH • WIN</div>
+                                    <a href="javascript:void(0)" class="btn-card-action"><span>BET NOW</span> <i class="fa-solid fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. OCEAN FISHING -->
+                    <div class="matrix-game-card casino-card-chamfer-wrap" style="--card-border: #06b6d4; --card-glow: rgba(6, 182, 212, 0.65); --card-sub: #38bdf8;" onclick="launchGameTheater('Ocean Fishing', '276.3K Active Players', './IMG/5.png')">
+                        <div class="card-octagonal-bezel">
+                            <div class="card-octagonal-chassis">
+                                <div class="top-notch-tab"></div>
+                                <div class="card-floating-badge badge-top"><i class="fa-solid fa-water"></i> NEW</div>
+                                <div class="card-specular-glare"></div>
+                                
+                                <div class="card-artwork-layer">
+                                    <img src="./IMG/5.png" alt="Ocean Fishing" loading="lazy" onerror="this.src='./IMG/5.png'">
+                                </div>
+
+                                <div class="card-vignette"></div>
+                                <div class="matrix-content-deck">
+                                    <div class="matrix-title-text" style="color: #38bdf8;">FISHING</div>
+                                    <div class="matrix-player-text"><i class="fa-solid fa-users"></i> 276.3K PLAYERS</div>
+                                    <div class="matrix-tagline-text">CATCH • UPGRADE • WIN</div>
+                                    <a href="javascript:void(0)" class="btn-card-action"><span>PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6. AVIATOR CRASH -->
+                    <div class="matrix-game-card casino-card-chamfer-wrap" style="--card-border: #f59e0b; --card-glow: rgba(245, 158, 11, 0.65); --card-sub: #fcd34d;" onclick="launchGameTheater('Aviator Crash', '203.7K Active Players', './IMG/1.png')">
+                        <div class="card-octagonal-bezel">
+                            <div class="card-octagonal-chassis">
+                                <div class="top-notch-tab"></div>
+                                <div class="card-floating-badge"><i class="fa-solid fa-plane"></i> 5000X</div>
+                                <div class="card-specular-glare"></div>
+                                
+                                <div class="card-artwork-layer">
+                                    <img src="./IMG/1.png" alt="Aviator Crash" loading="lazy" onerror="this.src='./IMG/1.png'">
+                                </div>
+
+                                <div class="card-vignette"></div>
+                                <div class="matrix-content-deck">
+                                    <div class="matrix-title-text" style="color: #fcd34d;">CRASH</div>
+                                    <div class="matrix-player-text"><i class="fa-solid fa-users"></i> 203.7K PLAYERS</div>
+                                    <div class="matrix-tagline-text">PREDICT • MULTIPLY • WIN</div>
+                                    <a href="javascript:void(0)" class="btn-card-action"><span>FLY NOW</span> <i class="fa-solid fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. POKER ELITE -->
+                    <div class="matrix-game-card casino-card-chamfer-wrap" style="--card-border: #8b5cf6; --card-glow: rgba(139, 92, 246, 0.65); --card-sub: #c4b5fd;" onclick="launchGameTheater('Poker Elite', '165.2K Active Players', './IMG/2.png')">
+                        <div class="card-octagonal-bezel">
+                            <div class="card-octagonal-chassis">
+                                <div class="top-notch-tab"></div>
+                                <div class="card-floating-badge badge-vip"><i class="fa-solid fa-crown"></i> VIP</div>
+                                <div class="card-specular-glare"></div>
+                                
+                                <div class="card-artwork-layer">
+                                    <img src="./IMG/2.png" alt="Poker Elite" loading="lazy" onerror="this.src='./IMG/2.png'">
+                                </div>
+
+                                <div class="card-vignette"></div>
+                                <div class="matrix-content-deck">
+                                    <div class="matrix-title-text" style="color: #c4b5fd;">POKER</div>
+                                    <div class="matrix-player-text"><i class="fa-solid fa-users"></i> 165.2K PLAYERS</div>
+                                    <div class="matrix-tagline-text">SKILL • BLUFF • WIN</div>
+                                    <a href="javascript:void(0)" class="btn-card-action"><span>PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. CYBER KENO -->
+                    <div class="matrix-game-card casino-card-chamfer-wrap" style="--card-border: #3b82f6; --card-glow: rgba(59, 130, 246, 0.65); --card-sub: #93c5fd;" onclick="launchGameTheater('Cyber Keno', '121.6K Active Players', './IMG/4.png')">
+                        <div class="card-octagonal-bezel">
+                            <div class="card-octagonal-chassis">
+                                <div class="top-notch-tab"></div>
+                                <div class="card-floating-badge"><i class="fa-solid fa-bolt"></i> HOT</div>
+                                <div class="card-specular-glare"></div>
+                                
+                                <div class="card-artwork-layer">
+                                    <img src="./IMG/4.png" alt="Cyber Keno" loading="lazy" onerror="this.src='./IMG/4.png'">
+                                </div>
+
+                                <div class="card-vignette"></div>
+                                <div class="matrix-content-deck">
+                                    <div class="matrix-title-text" style="color: #93c5fd;">KENO</div>
+                                    <div class="matrix-player-text"><i class="fa-solid fa-users"></i> 121.6K PLAYERS</div>
+                                    <div class="matrix-tagline-text">PICK • MATCH • WIN</div>
+                                    <a href="javascript:void(0)" class="btn-card-action"><span>PLAY NOW</span> <i class="fa-solid fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Bottom Trust / Benefits Bar -->
+            <div class="top-games-trust-bar">
+                <div class="trust-bar-decor-left">
+                    <span class="cyber-slash"></span><span class="cyber-slash"></span><span class="cyber-slash"></span>
+                </div>
+                <div class="trust-feature-item">
+                    <div class="trust-feature-icon icon-shield"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="trust-feature-text">
+                        <div class="trust-feature-title">SAFE &amp; SECURE</div>
+                        <div class="trust-feature-sub">YOUR SAFETY OUR PRIORITY</div>
+                    </div>
+                </div>
+                <div class="trust-feature-item">
+                    <div class="trust-feature-icon icon-deposit"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="trust-feature-text">
+                        <div class="trust-feature-title">INSTANT DEPOSITS</div>
+                        <div class="trust-feature-sub">PLAY WITHOUT DELAY</div>
+                    </div>
+                </div>
+                <div class="trust-feature-item">
+                    <div class="trust-feature-icon icon-jackpot"><i class="fa-solid fa-gem"></i></div>
+                    <div class="trust-feature-text">
+                        <div class="trust-feature-title">HUGE JACKPOTS</div>
+                        <div class="trust-feature-sub">REAL PRIZES, REAL FUN</div>
+                    </div>
+                </div>
+                <div class="trust-feature-item">
+                    <div class="trust-feature-icon icon-support"><i class="fa-solid fa-headset"></i></div>
+                    <div class="trust-feature-text">
+                        <div class="trust-feature-title">24/7 SUPPORT</div>
+                        <div class="trust-feature-sub">WE'RE ALWAYS HERE</div>
+                    </div>
+                </div>
+                <div class="trust-bar-decor-right">
+                    <span class="cyber-slash"></span><span class="cyber-slash"></span><span class="cyber-slash"></span>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Audio & Interactive Experience Scripts -->
+    <script>
+        // Web Audio API Synthesizer for instant tactile sound
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playBeep(freq = 440, type = 'sine', duration = 0.08) {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        // Cyber Notification Toast
+        function showCyberToast(msg) {
+            playBeep(520, 'sine');
+            const toast = document.createElement('div');
+            toast.textContent = msg;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '30px';
+            toast.style.right = '30px';
+            toast.style.background = 'linear-gradient(135deg, #1e1b4b, #3b0764)';
+            toast.style.border = '1px solid #c026d3';
+            toast.style.boxShadow = '0 0 25px rgba(192, 38, 211, 0.7)';
+            toast.style.color = '#fff';
+            toast.style.padding = '12px 24px';
+            toast.style.borderRadius = '999px';
+            toast.style.fontFamily = "'Orbitron', sans-serif";
+            toast.style.fontSize = '12px';
+            toast.style.letterSpacing = '1px';
+            toast.style.zIndex = '9999';
+            toast.style.transition = 'all 0.4s ease';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                setTimeout(() => toast.remove(), 400);
+            }, 2200);
+        }
+
+        // Launch Game Theater Action
+        function launchGameTheater(title, sub, imgSrc) {
+            playBeep(680, 'triangle', 0.15);
+            showCyberToast('Launching ' + title + ' (' + sub + ')...');
+        }
+
+        // 3D Card Tilt & Specular Glare System (Exact Lobby Engine)
+        const maxTilt = 14;
+        document.querySelectorAll('.casino-card-chamfer-wrap').forEach(cardContainer => {
+            const specularGlare = cardContainer.querySelector('.card-specular-glare');
+            
+            cardContainer.addEventListener('mouseenter', () => playBeep(320, 'sine', 0.04));
+            
+            cardContainer.addEventListener('mousemove', (e) => {
+                const rect = cardContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = -((y - centerY) / centerY) * maxTilt;
+                const rotateY = ((x - centerX) / centerX) * maxTilt;
+                
+                cardContainer.style.transform = `perspective(1100px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.03, 1.03, 1.03)`;
+                
+                if (specularGlare) {
+                    const pctX = (x / rect.width) * 100;
+                    const pctY = (y / rect.height) * 100;
+                    specularGlare.style.setProperty('--mouse-x', `${pctX}%`);
+                    specularGlare.style.setProperty('--mouse-y', `${pctY}%`);
+                }
+            });
+
+            cardContainer.addEventListener('mouseleave', () => {
+                cardContainer.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+
+            cardContainer.addEventListener('touchmove', (e) => {
+                if (!e.touches[0]) return;
+                const rect = cardContainer.getBoundingClientRect();
+                const x = e.touches[0].clientX - rect.left;
+                const y = e.touches[0].clientY - rect.top;
+                const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 10;
+                const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 10;
+                cardContainer.style.transform = `perspective(1100px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+            }, { passive: true });
+
+            cardContainer.addEventListener('touchend', () => {
+                cardContainer.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+    </script>
+</body>
+</html>

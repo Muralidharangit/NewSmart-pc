@@ -152,13 +152,15 @@
         </div>
 
         <!-- SECTION 1: CATEGORY FILTER SECTION (GAMES BY CATEGORY) -->
-        <section id="categorySection" class="mb-5">
+        <section id="categorySection" class="mb-5 showcase-block-panel">
             <div class="section-header-bar">
                 <h2 class="section-header-title">
                     <i class="fa-solid fa-layer-group text-info"></i> Games by Category
                 </h2>
                 <div class="d-none d-sm-flex align-items-center gap-2">
-                    <span class="text-secondary small fw-semibold">FILTER BY GAME TYPE</span>
+                    <a href="#categorySection" class="btn-view-all">
+                    <span>View All</span> <i class="fa-solid fa-arrow-right"></i>
+                </a>
                 </div>
             </div>
 
@@ -674,7 +676,7 @@
         </section>
 
         <!-- SECTION 2: FEATURED GAMES -->
-        <section id="featuredSection" class="mb-5">
+        <section id="featuredSection" class="mb-5 showcase-block-panel">
             <div class="section-header-bar" id="featuredHeader">
                 <h2 class="section-header-title">
                     <i class="fa-solid fa-star text-warning"></i> Featured Games
@@ -913,7 +915,7 @@
         </section>
 
         <!-- SECTION 3: POPULAR GAMES (8 CARDS WITH NEON BORDERS & PLAYERS COUNT) -->
-        <section id="popularSection" class="mb-5">
+        <section id="popularSection" class="mb-5 showcase-block-panel">
             <div class="section-header-bar" id="popularHeader">
                 <h2 class="section-header-title">
                     <i class="fa-solid fa-fire text-danger"></i> Popular Games
@@ -1340,16 +1342,19 @@
     =============================================================== -->
     <div class="modal fade modal-theme-dark" id="smartpcCashoutModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
-            <div class="modal-content">
+            <div class="modal-content position-relative overflow-hidden">
+                <!-- Red Game Close Button -->
+                <button type="button" class="btn-game-modal-close" data-bs-dismiss="modal" aria-label="Close" title="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
                 <div class="modal-body p-4 text-center">
                     
-                    <!-- Brand Header -->
-                    <!-- <div class="winbet-logo justify-content-center mb-3">
-                        <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img">
-                    </div> -->
-
                     <!-- Inner Indented Cash Out Panel -->
                     <div class="inner-cashout-panel">
+                        <div class="cashout-icon-glow">
+                            <i class="fa-solid fa-coins text-warning fs-4"></i>
+                        </div>
                         <h3 class="panel-heading">Cash Out</h3>
                         <p class="panel-label">Amount</p>
                         <div class="panel-amount">
@@ -1361,11 +1366,12 @@
                     <!-- Actions: Confirm & Cancel -->
                     <div class="d-flex flex-column gap-2 mt-3">
                         <button type="button" class="btn-purple-action" onclick="confirmSmartPCCashout()">
-                            <i class="fa-solid fa-check"></i>
+                            <i class="fa-solid fa-circle-check"></i>
                             <span>Confirm</span>
                         </button>
                         <button type="button" class="btn-cancel-action" data-bs-dismiss="modal">
-                            Cancel
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            <span>Cancel</span>
                         </button>
                     </div>
 
@@ -1383,7 +1389,12 @@
     =============================================================== -->
     <div class="modal fade modal-theme-dark" id="terminalConfirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
-            <div class="modal-content">
+            <div class="modal-content position-relative overflow-hidden">
+                <!-- Red Game Close Button -->
+                <button type="button" class="btn-game-modal-close" data-bs-dismiss="modal" aria-label="Close" title="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
                 <div class="modal-body p-4 text-center">
                     
                     <!-- Step 4 Pill -->
@@ -1392,13 +1403,11 @@
                         <span class="pill-text">Print Cashout Ticket</span>
                     </div>
 
-                    <!-- Brand Header -->
-                    <!-- <div class="winbet-logo justify-content-center mb-3">
-                        <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img">
-                    </div> -->
-
                     <!-- Inner Indented Panel -->
                     <div class="inner-cashout-panel">
+                        <div class="cashout-icon-glow">
+                            <i class="fa-solid fa-receipt fs-4"></i>
+                        </div>
                         <h3 class="panel-heading">Print Cashout Ticket</h3>
                         <p class="panel-label">Amount</p>
                         <div class="panel-amount">
@@ -1414,7 +1423,8 @@
                             <span>Print Ticket</span>
                         </button>
                         <button type="button" class="btn-cancel-action" data-bs-dismiss="modal">
-                            Cancel
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            <span>Cancel</span>
                         </button>
                     </div>
 
@@ -1432,7 +1442,12 @@
     =============================================================== -->
     <div class="modal fade modal-theme-dark" id="ticketSuccessModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
-            <div class="modal-content">
+            <div class="modal-content position-relative overflow-hidden">
+                <!-- Red Game Close Button -->
+                <button type="button" class="btn-game-modal-close" data-bs-dismiss="modal" aria-label="Close" title="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
                 <div class="modal-body p-4 text-center">
                     
                     <!-- Step 5 Pill -->
@@ -1440,11 +1455,6 @@
                         <span class="badge-circle">5</span>
                         <span class="pill-text">Ticket Printed!</span>
                     </div>
-
-                    <!-- WinBet Central Brand Header -->
-                    <!-- <div class="winbet-logo justify-content-center mb-2">
-                        <img src="./IMG/logo.png" alt="WINBET" class="brand-logo-img logo-sm">
-                    </div> -->
 
                     <!-- Glowing Emerald Green Checkmark -->
                     <div class="neon-success-circle-wrap">
@@ -1497,7 +1507,9 @@
                             <span class="badge bg-purple-900 border border-purple-500 small" id="theaterModeBadge" style="font-size: 0.7rem; color: #d8b4fe; background:#1c093a;">REAL PLAY MODE</span>
                         </div>
                     </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-game-modal-close position-static" data-bs-dismiss="modal" aria-label="Close" title="Close Game">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
 
                 <div class="modal-body p-4 text-center">

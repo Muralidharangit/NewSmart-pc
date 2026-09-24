@@ -17,8 +17,8 @@
     <!-- Custom Unified Master Stylesheet -->
     <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-    <div class="container-fluid px-lg-5 py-3">
+<body class="d-flex flex-column min-vh-100">
+    <div class="container-fluid px-lg-5 py-3 d-flex flex-column flex-grow-1">
         <!-- Top Controls Bar -->
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 border-bottom pb-3" style="border-color: rgba(94, 23, 187, 0.4) !important;">
             <div class="d-flex align-items-center gap-2">
@@ -46,11 +46,13 @@
             </div>
         </div>
 
-        <!-- ==============================================================
-             VIEW 1: INTERACTIVE STEP-BY-STEP REGISTRATION FLOW (MAIN)
-             Screen 1: Registration Form -> Screen 2: Registration Successful
-        =============================================================== -->
-        <div id="wizardContainer" class="row justify-content-center py-2">
+        <!-- Center content wrapper -->
+        <div class="my-auto w-100 py-2">
+            <!-- ==============================================================
+                 VIEW 1: INTERACTIVE STEP-BY-STEP REGISTRATION FLOW (MAIN)
+                 Screen 1: Registration Form -> Screen 2: Registration Successful
+            =============================================================== -->
+            <div id="wizardContainer" class="row justify-content-center py-2">
             <div class="col-12 col-md-8 col-lg-5 col-xl-4">
 
                 <!-- MAIN INTERACTIVE CARD -->

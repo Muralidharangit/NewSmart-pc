@@ -472,61 +472,108 @@ body {
 
 /* ==========================================================================
    BUTTONS
+/* ==========================================================================
+   BUTTONS (FRIENDLY 3D UI/UX GAMING STYLE)
    ========================================================================== */
 .btn-winbet, .btn-purple-action {
-    background: var(--purple-btn-gradient);
-    border: 1px solid #b77bff;
+    background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 55%, #5b21b6 100%);
+    border: 1.5px solid #a78bfa;
     color: #ffffff;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 1.02rem;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     padding: 12px 22px;
-    border-radius: 12px;
+    border-radius: 14px;
     width: 100%;
     cursor: pointer;
-    box-shadow: 0 5px 20px rgba(106, 21, 222, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-    transition: all 0.25s ease;
+    box-shadow: 
+        0 4px 0 #3b0764,
+        0 6px 18px rgba(109, 40, 217, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.25);
+    transition: all 0.18s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     text-align: center;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 9px;
+}
+
+.btn-winbet i, .btn-purple-action i {
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    font-size: 1.05rem;
 }
 
 .btn-winbet:hover, .btn-purple-action:hover {
-    background: var(--purple-btn-hover);
-    box-shadow: 0 8px 25px rgba(138, 53, 255, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    background: linear-gradient(180deg, #9f75ff 0%, #7c3aed 55%, #6d28d9 100%);
+    box-shadow: 
+        0 5px 0 #3b0764,
+        0 8px 24px rgba(139, 92, 246, 0.6),
+        inset 0 2px 3px rgba(255, 255, 255, 0.6);
     color: #ffffff;
-    transform: translateY(-1.5px);
+    transform: translateY(-2px);
 }
 
 .btn-winbet:active, .btn-purple-action:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 10px rgba(106, 21, 222, 0.4);
+    transform: translateY(3px);
+    box-shadow: 
+        0 1px 0 #3b0764,
+        0 2px 8px rgba(109, 40, 217, 0.4),
+        inset 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .btn-cancel-action {
-    background: var(--cancel-btn-bg);
-    border: 1px solid var(--cancel-btn-border);
-    color: #cfbdf5;
+    background: linear-gradient(180deg, #1f1138 0%, #130926 100%);
+    border: 1.5px solid #4c2882;
+    color: #d8b4fe;
     font-weight: 600;
-    font-size: 0.92rem;
-    padding: 10px 20px;
-    border-radius: 12px;
+    font-size: 0.95rem;
+    padding: 11px 20px;
+    border-radius: 14px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.18s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     width: 100%;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    box-shadow: 
+        0 3px 0 #0d041a,
+        0 5px 12px rgba(0, 0, 0, 0.6),
+        inset 0 1px 2px rgba(255, 255, 255, 0.12);
+}
+
+.btn-cancel-action i {
+    color: #ff6b81;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 5px rgba(255, 107, 129, 0.6));
+    font-size: 1.05rem;
+    transition: transform 0.2s ease;
 }
 
 .btn-cancel-action:hover {
-    background: #230c4c;
-    border-color: #692bc7;
+    background: linear-gradient(180deg, #381528 0%, #1f0815 100%);
+    border-color: #ff6b81;
     color: #ffffff;
-    box-shadow: 0 0 12px rgba(105, 43, 199, 0.35);
+    box-shadow: 
+        0 4px 0 #590d22,
+        0 7px 18px rgba(255, 107, 129, 0.35),
+        inset 0 2px 2px rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-cancel-action:hover i {
+    transform: scale(1.15);
+    color: #ff8fa3;
+}
+
+.btn-cancel-action:active {
+    transform: translateY(3px);
+    box-shadow: 
+        0 1px 0 #590d22,
+        0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .btn-gold-action {
@@ -683,22 +730,41 @@ body {
 }
 
 .neon-success-circle {
-    width: 66px;
-    height: 66px;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
-    border: 3.5px solid var(--neon-green);
+    border: 3px solid #22c55e;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--neon-green);
+    color: #ffffff;
     font-size: 2rem;
-    box-shadow: 0 0 25px var(--neon-green-glow), inset 0 0 15px rgba(34, 197, 94, 0.25);
-    animation: pulseGlow 2.5s infinite alternate ease-in-out;
+    background: radial-gradient(circle at 35% 25%, #0d381e 0%, #051a0d 60%, #020b05 100%);
+    box-shadow: 
+        0 5px 0 #0d5225,
+        0 8px 20px rgba(0, 0, 0, 0.85),
+        0 0 25px rgba(34, 197, 94, 0.6),
+        inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.8);
+    animation: pulse3DGlow 2.5s infinite alternate ease-in-out;
 }
 
-@keyframes pulseGlow {
-    0% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.4), inset 0 0 8px rgba(34, 197, 94, 0.2); }
-    100% { box-shadow: 0 0 32px rgba(34, 197, 94, 0.85), inset 0 0 20px rgba(34, 197, 94, 0.45); }
+.neon-success-circle i {
+    background: linear-gradient(180deg, #ffffff 0%, #a7f3d0 30%, #22c55e 70%, #15803d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 8px rgba(34, 197, 94, 0.8));
+}
+
+@keyframes pulse3DGlow {
+    0% { 
+        transform: translateY(0);
+        box-shadow: 0 5px 0 #0d5225, 0 8px 20px rgba(0, 0, 0, 0.85), 0 0 20px rgba(34, 197, 94, 0.5); 
+    }
+    100% { 
+        transform: translateY(-2px);
+        box-shadow: 0 7px 0 #0d5225, 0 12px 28px rgba(0, 0, 0, 0.9), 0 0 35px rgba(34, 197, 94, 0.9); 
+    }
 }
 
 .success-banner-text, .success-text-heading {
@@ -776,11 +842,108 @@ body {
    MODAL & TOAST STYLES
    ========================================================================== */
 .modal-theme-dark .modal-content {
-    background: #0d041e;
-    border: 2px solid #8b3dff;
-    border-radius: 20px;
-    box-shadow: 0 0 45px rgba(139, 61, 255, 0.6);
+    background: radial-gradient(circle at 50% 0%, #220d48 0%, #0e041f 100%);
+    border: 1.5px solid rgba(168, 85, 247, 0.45);
+    border-radius: 24px;
+    box-shadow: 0 12px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(147, 51, 234, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
     color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Friendly 3D Ruby-Coral Close Button */
+.btn-game-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ff4d6d 0%, #c9184a 55%, #800f2f 100%);
+    border: 1.5px solid #ff758f;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    cursor: pointer;
+    box-shadow: 
+        0 3px 0 #590d22,
+        0 6px 14px rgba(0, 0, 0, 0.65),
+        0 0 15px rgba(255, 77, 109, 0.45),
+        inset 0 2px 3px rgba(255, 255, 255, 0.55),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+    transition: all 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1050;
+    padding: 0;
+    outline: none;
+    line-height: 1;
+}
+
+.btn-game-modal-close i {
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.9));
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: transform 0.22s ease;
+}
+
+.btn-game-modal-close:hover {
+    background: radial-gradient(circle at 35% 30%, #ff758f 0%, #e6195e 55%, #a81039 100%);
+    border-color: #ffa8ba;
+    box-shadow: 
+        0 4px 0 #590d22,
+        0 8px 20px rgba(0, 0, 0, 0.8),
+        0 0 24px rgba(255, 77, 109, 0.8),
+        inset 0 2px 4px rgba(255, 255, 255, 0.7);
+    transform: translateY(-2px);
+}
+
+.btn-game-modal-close:hover i {
+    transform: rotate(90deg) scale(1.15);
+}
+
+.btn-game-modal-close:active {
+    transform: translateY(3px);
+    box-shadow: 
+        0 1px 0 #590d22,
+        0 2px 6px rgba(0, 0, 0, 0.9),
+        0 0 10px rgba(255, 77, 109, 0.5);
+}
+
+/* Friendly 3D Glowing Gold Token / Cash Emblem */
+.cashout-icon-glow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 25%, #ffb703 0%, #fb8500 65%, #9e4700 100%);
+    border: 2px solid #ffe699;
+    box-shadow: 
+        0 4px 0 #6e3000,
+        0 7px 18px rgba(0, 0, 0, 0.75),
+        0 0 22px rgba(255, 183, 3, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.65),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.7);
+    margin-bottom: 8px;
+    animation: cashout3DPulse 2.8s infinite ease-in-out;
+}
+
+.cashout-icon-glow i {
+    font-size: 1.7rem;
+    color: #ffffff;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+
+@keyframes cashout3DPulse {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+        box-shadow: 0 4px 0 #6e3000, 0 7px 18px rgba(0,0,0,0.75), 0 0 18px rgba(255, 183, 3, 0.45); 
+    }
+    50% { 
+        transform: translateY(-3px) scale(1.06); 
+        box-shadow: 0 7px 0 #6e3000, 0 11px 24px rgba(0,0,0,0.85), 0 0 28px rgba(255, 183, 3, 0.75); 
+    }
 }
 
 .thermal-slip-body {
